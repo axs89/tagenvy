@@ -13,9 +13,9 @@ module.exports = function(config) {
 
         // list of files / patterns to load in the browser
         files: [
-            'public/bower/angular/angular.js',
-            'public/bower/angular-mocks/angular-mocks.js',
-            'public/js/tagenvy.js',
+            'bower_components/angular/angular.js',
+            'bower_components/angular-mocks/angular-mocks.js',
+            'dist/tagenvy.js',
             'src/js/test/unit/**/*.js'
         ],
 
