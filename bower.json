@@ -7,5 +7,23 @@
   "devDependencies": {
     "angular-mocks": "~1.2.2",
     "angular-scenario": "~1.0.7"
-  }
+  },
+  "authors": [
+    "Arun Sivashankaran <info@funnelenvy.com>"
+    "Jurgen Van de Moere <jurgen.van.de.moere@gmail.com>"
+  ],
+  "description": "TagEnvy analytics framework",
+  "main": "dist/tagenvy.js",
+  "keywords": [
+    "tagenvy"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/axs89/tagenvy",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
 }
