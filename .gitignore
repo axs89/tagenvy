@@ -15,7 +15,7 @@ libpeerconnection.log
 .DS_Store
 
 # Bower components
-/public/bower
+bower_components
 
 # Node modules
 node_modules

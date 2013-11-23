@@ -18,7 +18,7 @@ module.exports = function (grunt) {
                     'src/js/src/tagenvy/services/**/*.js',
                     'src/js/src/tagenvy/tagenvy.suffix'
                 ],
-                dest: 'public/js/tagenvy.js'
+                dest: 'dist/tagenvy.js'
             }
         },
         uglify: {
@@ -27,7 +27,7 @@ module.exports = function (grunt) {
             },
             jid: {
                 files: {
-                    'public/js/tagenvy.min.js': ['<%= concat.tagenvy.dest %>']
+                    'dist/tagenvy.min.js': ['<%= concat.tagenvy.dest %>']
                 }
             }
         },
@@ -56,7 +56,7 @@ module.exports = function (grunt) {
             server:{
                 options: {
                     port: 9000,
-                    base: 'public',
+                    base: './',
                     hostname: 'localhost',
                     keepalive: true,
                     livereload: true
