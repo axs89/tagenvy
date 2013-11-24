@@ -69,6 +69,12 @@ Then navigate your browser to:
 
 ## Change log
 
+### 0.3.0
+
+- Added live selectors support (using jQuery)
+- Added tagenvy:document:p:click event to demonstrate live selectors
+- Updated example with live selector
+
 ### 0.2.0
 
 - Added TagEnvy automatic bootstrapping
