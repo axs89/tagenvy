@@ -3,7 +3,7 @@
  * @name tagenvy.directive:p
  *
  * @description
- * Test directive to work with paragraphs on example page
+ * Directive to work with paragraph elements
  */
 
 angular.module('tagenvy.directives')
@@ -12,6 +12,7 @@ angular.module('tagenvy.directives')
             restrict: 'E',
             link: function (scope, iElement, iAttrs) {
 
+                // Broadcast click events
                 iElement.bind('click', function(){
                     console.log('Broadcast tagenvy:p:click event');
                     $rootScope.$broadcast('tagenvy:p:click', iElement);
