@@ -69,6 +69,11 @@ Then navigate your browser to:
 
 ## Change log
 
+### 0.4.0
+
+- Added support for unit tests
+- Added support for skipping automatic bootstrapping
+
 ### 0.3.0
 
 - Added live selectors support (using jQuery)
