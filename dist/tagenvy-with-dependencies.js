@@ -29337,6 +29337,9 @@ TagEnvy.prototype.bootstrap = function(){
 
     // Bootstrap tagenvy.client module and save injector
     this.$injector = angular.bootstrap(document, ['tagenvy.client']);
+
+    // Run post bootstrap tasks
+    this.postBootstrap();
 };
 
 /**
