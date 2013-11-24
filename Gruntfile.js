@@ -19,6 +19,14 @@ module.exports = function (grunt) {
                     'src/js/src/tagenvy/tagenvy.suffix'
                 ],
                 dest: 'dist/tagenvy.js'
+            },
+            tagenvyWithDependencies: {
+                src: [
+                    'bower_components/angular/angular.js',
+                    'bower_components/console-shim/console-shim.js',
+                    '<%= concat.tagenvy.dest %>'
+                ],
+                dest: 'dist/tagenvy-with-dependencies.js'
             }
         },
         uglify: {
