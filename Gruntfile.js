@@ -22,6 +22,7 @@ module.exports = function (grunt) {
             },
             tagenvyWithDependencies: {
                 src: [
+                    'bower_components/jquery/jquery.js',
                     'bower_components/angular/angular.js',
                     'bower_components/console-shim/console-shim.js',
                     '<%= concat.tagenvy.dest %>'
