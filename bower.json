@@ -9,7 +9,7 @@
     "angular-scenario": "~1.0.7"
   },
   "authors": [
-    "Arun Sivashankaran <info@funnelenvy.com>"
+    "Arun Sivashankaran <info@funnelenvy.com>",
     "Jurgen Van de Moere <jurgen.van.de.moere@gmail.com>"
   ],
   "description": "TagEnvy analytics framework",
