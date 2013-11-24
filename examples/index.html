@@ -3,19 +3,30 @@
 <head>
     <meta charset="utf8">
     <title>TagEnvy</title>
-    <script src="../bower_components/angular/angular.js"></script>
-    <script src="../dist/tagenvy.js"></script>
+    <script src="../dist/tagenvy-with-dependencies.js"></script>
     <script>
         console.log('SCRIPT TAG IS PROCESSED');
+
         tagenvy.ready(function(){
+
             console.log('Tagenvy is ready!');
+
+            // Listen for p elements that are clicked
             tagenvy.on('tagenvy:p:click', function(){
-                console.log('Handle click event on p element');
+                console.log('Event handler for "tagenvy:p:click" is run');
             });
+
+            // Listen for body elements that are initialized
+            tagenvy.on('tagenvy:body:init', function(){
+                console.log('Event handler for "tagenvy:body:init" is run');
+            });
+
+
         });
     </script>
     <body>
-        <p>TagEnvy test page to see how the library behaves in a page</p>
+        <h1>TagEnvy test page</h1>
+        <p>Clicking this paragraph should trigger the "tagenvy:p:click", which has a listener that logs a message to the console</p>
     </body>
 </head>
 </html>
