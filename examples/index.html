@@ -5,6 +5,15 @@
     <title>TagEnvy</title>
     <script src="../bower_components/angular/angular.js"></script>
     <script src="../dist/tagenvy.js"></script>
+    <script>
+        console.log('SCRIPT TAG IS PROCESSED');
+        tagenvy.ready(function(){
+            console.log('Tagenvy is ready!');
+            tagenvy.on('tagenvy:p:click', function(){
+                console.log('Handle click event on p element');
+            });
+        });
+    </script>
     <body>
         <p>TagEnvy test page to see how the library behaves in a page</p>
     </body>
