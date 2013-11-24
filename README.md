@@ -31,10 +31,11 @@ All event names are prefixed with `tagenvy:` and you can define listeners to lis
 
 ### 0.2.0
 
-- Added bootstrapper
+- Added TagEnvy automatic bootstrapping
 - Added tagenvy:ready event
 - Added tagenvy:body:init event
 - Added tagenvy:p:click event
+- Added automatic building of dist/tagenvy-with-dependecies.js
 
 ### 0.1.0
 
