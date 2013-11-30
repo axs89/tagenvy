@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf8">
+    <title>TagEnvy demo</title>
+    <script src="../dist/tagenvy-with-dependencies.js"></script>
+    <script>
+
+        tagenvy.ready(function(){
+
+            // Assign output
+            var $output = $('#output');
+
+            var output = function(message){
+                $output.append(message + "\n");
+            };
+
+            output('TagEnvy is ready!!');
+
+            // Define callbacks
+
+            var outputCallback = function(event){
+                output('The event "' + event.name + '" was fired');
+            }
+
+            // Register sample listeners to show what is happening for demo purposes
+            tagenvy.on('tagenvy:common:init', outputCallback);
+            tagenvy.on('tagenvy:shopping:init', outputCallback);
+            tagenvy.on('tagenvy:shopping:cart', outputCallback);
+            tagenvy.on('tagenvy:spending:init', outputCallback);
+            tagenvy.on('tagenvy:spending:cart', outputCallback);
+            tagenvy.on('tagenvy:common:finalize', outputCallback);
+        });
+
+
+    </script>
+    <body id="cart" class="shopping spending">
+        <h1>TagEnvy demo</h1>
+
+        <p>This pages configures TagEnvy to simulate the behavior of <a href="https://gist.github.com/axs89/7558831">this gist</a>.</p>
+
+        <p>The body has the following attributes:</p>
+
+        <ul>
+            <li>id="cart"</li>
+            <li>classes="shopping spending"</p></li>
+        </ul>
+
+        <pre id="output"></pre>
+
+    </body>
+</head>
+</html>
