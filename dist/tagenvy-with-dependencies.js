@@ -29256,15 +29256,25 @@ if (!console["count"]) console["count"] = function() {};
 })();
 (function(window, document) {
 
+/**
+ * Global configuration that is used by TagEnvy.
+ *
+ * It is passed to tagenvy global instance and to the AngularJS module
+ */
+
+var config = {
+
+    // Enable debug mode to log debug messages in the console
+    debug: true
+};
+
 // Create all modules and define dependencies to make sure they exist
 // and are loaded in the correct order to satisfy dependency injection
 // before all nested files are concatenated by Grunt
 
 // Config
 angular.module('tagenvy.config', [])
-    .value('tagenvy.config', {
-        debug: true
-    });
+    .value('tagenvy.config', config);
 
 // Modules
 angular.module('tagenvy.controllers', []);
@@ -29281,11 +29291,6 @@ angular.module('tagenvy',
         'tagenvy.services'
     ]);
 
-angular.module('tagenvy')
-    .run(function(){
-        console.log('tagenvy module loaded!');
-    });
-
 angular.module('tagenvy.client', ['tagenvy']);
 
 /**
@@ -29294,11 +29299,40 @@ angular.module('tagenvy.client', ['tagenvy']);
  * @constructor
  */
 
-var TagEnvy = function TagEnvy(){
+var TagEnvy = function TagEnvy(config){
 
+    /**
+     * Placeholder for the AngularJS injector
+     */
     this.$injector = void 0;
+
+    /**
+     * Placeholder for the AngularJS root scope
+     */
     this.$rootScope = void 0;
+
+    /**
+     * Placeholder for the callbacks that need to be called when tagenvy is ready
+     */
     this._readyCallbacks = [];
+
+    /**
+     * Configuration object
+     */
+    this.config = {
+        debug: true
+    };
+
+    /**
+     * Override config settings if config is passed in
+     */
+    if(angular.isObject(config)) {
+        angular.extend(this.config, config);
+    }
+
+    /**
+     * Automatic bootstrap
+     */
 
     var tagenvy = this;
 
@@ -29325,7 +29359,7 @@ var TagEnvy = function TagEnvy(){
  * @returns {*|function()} Returns a function to unregister this listener
  */
 TagEnvy.prototype.on = function(eventName, listener){
-    console.log('Add listener: ' + eventName);
+    if (this.config.debug) console.log('Add listener: ' + eventName);
     return this.$rootScope.$on(eventName, listener);
 };
 
@@ -29335,7 +29369,7 @@ TagEnvy.prototype.on = function(eventName, listener){
  * @param callback
  */
 TagEnvy.prototype.ready = function(callback){
-    console.log('Add ready callback');
+    if (this.config.debug) console.log('Add ready callback');
     this._readyCallbacks.push(callback);
 };
 
@@ -29349,8 +29383,8 @@ TagEnvy.prototype.runReadyCallbacks = function(){
 
     // Broadcast event that tagenvy is ready
     this.$rootScope.$broadcast('tagenvy:ready');
-    console.log('broadcast tagenvy:ready');
-    console.dir(this);
+    if (this.config.debug) console.log('broadcast tagenvy:ready');
+    if (this.config.debug) console.dir(this);
 };
 
 /**
@@ -29382,8 +29416,8 @@ TagEnvy.prototype.postBootstrap = function(){
 /**
  * Instantiate globally accessible tagenvy instance
  */
-console.log('Instantiate window.tagenvy');
-window.tagenvy = new TagEnvy();/**
+if (config.debug) console.log('Instantiate window.tagenvy');
+window.tagenvy = new TagEnvy(config);/**
  * @ngdoc directive
  * @name tagenvy.directive:body
  *
@@ -29397,9 +29431,38 @@ angular.module('tagenvy.directives')
             restrict: 'E',
             link: function (scope, iElement, iAttrs) {
 
-                // Broadcast init event when the body is ready
+                // Create array of class names
+                var classNames = [];
+                if (iAttrs.class){
+                    classNames = iAttrs.class.split(/\s+/);
+                }
+
+                var bodyId = iAttrs.id || void 0;
+
+                // Broadcast events when the body is ready
                 angular.element(iElement).ready(function(){
+
+                    if (config.debug) console.log('tagenvy:body:init');
                     $rootScope.$broadcast('tagenvy:body:init', $location);
+
+                    if (config.debug) console.log('tagenvy:common:init');
+                    $rootScope.$broadcast('tagenvy:common:init', $location);
+
+                    angular.forEach(classNames, function(className){
+
+                        if (config.debug) console.log('tagenvy:' + className + ':init');
+                        $rootScope.$broadcast('tagenvy:' + className + ':init', $location);
+
+                        if(bodyId){
+                            if (config.debug) console.log('tagenvy:' + className + ':' + bodyId);
+                            $rootScope.$broadcast('tagenvy:' + className + ':' + bodyId, $location);
+                        }
+
+                    });
+
+                    if (config.debug) console.log('tagenvy:common:finalize');
+                    $rootScope.$broadcast('tagenvy:common:finalize', $location);
+
                 });
 
             }
