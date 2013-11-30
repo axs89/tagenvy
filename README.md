@@ -69,6 +69,11 @@ Then navigate your browser to:
 
 ## Change log
 
+### 0.5.0
+
+- Added support for triggering events based on body id and class names as demonstrated in [this gist](https://gist.github.com/axs89/7558831)
+- Added additional example page
+
 ### 0.4.0
 
 - Added support for unit tests
