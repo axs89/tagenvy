@@ -32,10 +32,33 @@ angular.module('tagenvy')
 
 angular.module('tagenvy.client', ['tagenvy']);
 
+/**
+ * Create TagEnvy constructor
+ *
+ * @constructor
+ */
+
 var TagEnvy = function TagEnvy(){
+
     this.$injector = void 0;
     this.$rootScope = void 0;
     this._readyCallbacks = [];
+
+    var tagenvy = this;
+
+    // Call bootstrap method when document is ready
+    angular.element(document).ready(function() {
+
+        // Skip automatic bootstrapping if TAGENVY_SKIP_AUTOMATIC_BOOTSTRAPPING is set to true
+        // Necessary to skip bootstrapping in unit tests
+        if (window.TAGENVY_SKIP_AUTOMATIC_BOOTSTRAPPING === true){
+            console.log('TagEnvy automatic bootstrapping skipped!');
+            return;
+        }
+
+        // Perform bootstrap
+        tagenvy.bootstrap();
+    });
 };
 
 /**
@@ -82,6 +105,9 @@ TagEnvy.prototype.bootstrap = function(){
     // Bootstrap tagenvy.client module and save injector
     this.$injector = angular.bootstrap(document, ['tagenvy.client']);
 
+    // Instantiate $rootscope from $injector
+    this.$rootScope = this.$injector.get('$rootScope');
+
     // Run post bootstrap tasks
     this.postBootstrap();
 };
@@ -93,29 +119,15 @@ TagEnvy.prototype.bootstrap = function(){
  */
 TagEnvy.prototype.postBootstrap = function(){
 
-    // Instantiate $rootscope from $injector
-    this.$rootScope = this.$injector.get('$rootScope');
-
     // Run ready listeners
     this.runReadyCallbacks();
 };
 
+/**
+ * Instantiate globally accessible tagenvy instance
+ */
 console.log('Instantiate window.tagenvy');
-window.tagenvy = new TagEnvy();
-
-// Bootstrap automatically when document is ready
-angular.element(document).ready(function() {
-
-    // Skip automatic bootstrapping if TAGENVY_SKIP_AUTOMATIC_BOOTSTRAPPING is set to true
-    // Necessary to skip bootstrapping in unit tests
-    if (window.TAGENVY_SKIP_AUTOMATIC_BOOTSTRAPPING === true){
-        console.log('TagEnvy automatic bootstrapping skipped!');
-        return;
-    }
-
-    // Perform bootstrap
-    tagenvy.bootstrap();
-});/**
+window.tagenvy = new TagEnvy();/**
  * @ngdoc directive
  * @name tagenvy.directive:body
  *
