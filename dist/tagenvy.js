@@ -61,17 +61,6 @@ var TagEnvy = function TagEnvy(config){
     this.$log = void 0;
 
     /**
-     * Create special getter to show a sensible error when trying to access $log before it can be used
-     */
-    Object.defineProperties(this, {
-        $log: {
-            get: function(){
-                throw new Error('$log is not available yet. Make sure to wrap your calls in a tagenvy.ready().');
-            }
-        }
-    });
-
-    /**
      * Placeholder for the callbacks that need to be called when tagenvy is ready
      */
     this._readyCallbacks = [];
