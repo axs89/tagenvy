@@ -5,6 +5,7 @@
 describe('tagenvy.directives.body', function() {
 
     var $injector,
+        $compile,
         $rootScope,
         tagenvy;
 
@@ -21,6 +22,7 @@ describe('tagenvy.directives.body', function() {
         // Get injector and root scope from tagenvy
         $injector = tagenvy.$injector;
         $rootScope = tagenvy.$rootScope;
+        $compile = $injector.get('$compile');
     });
 
     it('should broadcast a tagenvy:body:init event', function() {
@@ -28,20 +30,45 @@ describe('tagenvy.directives.body', function() {
         var rootScopeBroadcastSpy = spyOn($rootScope, '$broadcast');
         var $location = $injector.get('$location');
 
-        // Run tagenvy $digest cycle
-        tagenvy.$digest();
+        var $element = angular.element(document.body);
+        $compile($element)($rootScope);
+        $rootScope.$digest();
 
         expect(rootScopeBroadcastSpy).toHaveBeenCalled();
         expect(rootScopeBroadcastSpy).toHaveBeenCalledWith('tagenvy:body:init', $location);
+    });
+
+    it('should broadcast a tagenvy:common:init event', function() {
+
+        var rootScopeBroadcastSpy = spyOn($rootScope, '$broadcast');
+        var $location = $injector.get('$location');
+
+        var $element = angular.element(document.body);
+        $compile($element)($rootScope);
+        $rootScope.$digest();
+
+        expect(rootScopeBroadcastSpy).toHaveBeenCalled();
+        expect(rootScopeBroadcastSpy).toHaveBeenCalledWith('tagenvy:common:init', $location);
+    });
+
+    it('should broadcast a tagenvy:common:finalize event', function() {
+
+        var rootScopeBroadcastSpy = spyOn($rootScope, '$broadcast');
+        var $location = $injector.get('$location');
+
+        var $element = angular.element(document.body);
+        $compile($element)($rootScope);
+        $rootScope.$digest();
+
+        expect(rootScopeBroadcastSpy).toHaveBeenCalled();
+        expect(rootScopeBroadcastSpy).toHaveBeenCalledWith('tagenvy:common:finalize', $location);
     });
 
     it('should broadcast a tagenvy:<bodyClassName>:init event', function() {
 
         var spy = spyOn($rootScope, '$broadcast');
 
-        var $compile = $injector.get('$compile');
         var $element = angular.element(document.body);
-
         $element.addClass('bodyClassOne');
 
         $compile($element)($rootScope);
@@ -59,7 +86,6 @@ describe('tagenvy.directives.body', function() {
 
         var spy = spyOn($rootScope, '$broadcast');
 
-        var $compile = $injector.get('$compile');
         var $element = angular.element(document.body);
 
         $element.attr('id', 'bodyId');
