@@ -151,21 +151,11 @@ TagEnvy.prototype.postBootstrap = function(){
     // Instantiate $rootscope from $injector
     this.$rootScope = this.$injector.get('$rootScope');
 
+    // Instantiate $log
+    this.$log = this.$injector.get('$log');
+
     // Run ready listeners
     this.runReadyCallbacks();
-};
-
-/**
- * Run digest cycle
- *
- * This function should never be used directly.
- * It only exists for unit test purposes.
- */
-TagEnvy.prototype.$digest = function(element){
-    element = element || document;
-    var $compile = this.$injector.get('$compile');
-    $compile(element)(this.$rootScope);
-    this.$rootScope.$digest();
 };
 
 /**
