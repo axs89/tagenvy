@@ -7,7 +7,7 @@
  */
 
 angular.module('tagenvy.directives')
-    .directive('body', ['tagenvy.config', '$rootScope', '$location', function (config, $rootScope, $location) {
+    .directive('body', ['tagenvy.config', '$rootScope', '$location', '$log', function (config, $rootScope, $location, $log) {
         return {
             restrict: 'E',
             link: function (scope, iElement, iAttrs) {
@@ -20,31 +20,34 @@ angular.module('tagenvy.directives')
 
                 var bodyId = iAttrs.id || void 0;
 
-                // Broadcast events when the body is ready
-                angular.element(iElement).ready(function(){
+                // Fire events when DOM is ready to allow <script>
+                // elements to add listeners before the events are fired.
+                iElement.ready(function(){
 
-                    if (config.debug) console.log('tagenvy:body:init');
+                    if (config.debug) $log.log('Body directive broadcasts: tagenvy:body:init');
                     $rootScope.$broadcast('tagenvy:body:init', $location);
 
-                    if (config.debug) console.log('tagenvy:common:init');
+                    if (config.debug) $log.log('Body directive broadcasts: tagenvy:common:init');
                     $rootScope.$broadcast('tagenvy:common:init', $location);
 
                     angular.forEach(classNames, function(className){
 
-                        if (config.debug) console.log('tagenvy:' + className + ':init');
+                        if (config.debug) $log.log('Body directive broadcasts: tagenvy:' + className + ':init');
                         $rootScope.$broadcast('tagenvy:' + className + ':init', $location);
 
                         if(bodyId){
-                            if (config.debug) console.log('tagenvy:' + className + ':' + bodyId);
+                            if (config.debug) $log.log('Body directive broadcasts: tagenvy:' + className + ':' + bodyId);
                             $rootScope.$broadcast('tagenvy:' + className + ':' + bodyId, $location);
                         }
 
                     });
 
-                    if (config.debug) console.log('tagenvy:common:finalize');
+                    if (config.debug) $log.log('Body directive broadcasts: tagenvy:common:finalize');
                     $rootScope.$broadcast('tagenvy:common:finalize', $location);
 
                 });
+
+
 
             }
         };

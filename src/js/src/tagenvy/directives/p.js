@@ -7,14 +7,14 @@
  */
 
 angular.module('tagenvy.directives')
-    .directive('p', ['tagenvy.config', '$rootScope', function (config, $rootScope) {
+    .directive('p', ['tagenvy.config', '$rootScope', '$log', function (config, $rootScope, $log) {
         return {
             restrict: 'E',
-            link: function (scope, iElement, iAttrs) {
+            link    : function (scope, iElement, iAttrs) {
 
                 // Broadcast click events
-                iElement.bind('click', function(){
-                    console.log('Broadcast tagenvy:p:click event');
+                iElement.bind('click', function () {
+                    if (config.debug) $log.log('Broadcast tagenvy:p:click event');
                     $rootScope.$broadcast('tagenvy:p:click', iElement);
                 });
 

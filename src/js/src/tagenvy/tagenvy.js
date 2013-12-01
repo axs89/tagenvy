@@ -54,6 +54,22 @@ var TagEnvy = function TagEnvy(config){
     this.$rootScope = void 0;
 
     /**
+     * Placeholder for the AngularJS $log
+     */
+    this.$log = void 0;
+
+    /**
+     * Create special getter to show a sensible error when trying to access $log before it can be used
+     */
+    Object.defineProperties(this, {
+        $log: {
+            get: function(){
+                throw new Error('$log is not available yet. Make sure to wrap your calls in a tagenvy.ready().');
+            }
+        }
+    });
+
+    /**
      * Placeholder for the callbacks that need to be called when tagenvy is ready
      */
     this._readyCallbacks = [];
@@ -84,7 +100,7 @@ var TagEnvy = function TagEnvy(config){
         // Skip automatic bootstrapping if TAGENVY_SKIP_AUTOMATIC_BOOTSTRAPPING is set to true
         // Necessary to skip bootstrapping in unit tests
         if (window.TAGENVY_SKIP_AUTOMATIC_BOOTSTRAPPING === true){
-            console.log('TagEnvy automatic bootstrapping skipped!');
+            //$log.log('TagEnvy automatic bootstrapping skipped!');
             return;
         }
 
@@ -101,7 +117,6 @@ var TagEnvy = function TagEnvy(config){
  * @returns {*|function()} Returns a function to unregister this listener
  */
 TagEnvy.prototype.on = function(eventName, listener){
-    if (this.config.debug) console.log('Add listener: ' + eventName);
     return this.$rootScope.$on(eventName, listener);
 };
 
@@ -111,7 +126,6 @@ TagEnvy.prototype.on = function(eventName, listener){
  * @param callback
  */
 TagEnvy.prototype.ready = function(callback){
-    if (this.config.debug) console.log('Add ready callback');
     this._readyCallbacks.push(callback);
 };
 
@@ -125,8 +139,6 @@ TagEnvy.prototype.runReadyCallbacks = function(){
 
     // Broadcast event that tagenvy is ready
     this.$rootScope.$broadcast('tagenvy:ready');
-    if (this.config.debug) console.log('broadcast tagenvy:ready');
-    if (this.config.debug) console.dir(this);
 };
 
 /**
@@ -161,5 +173,4 @@ TagEnvy.prototype.postBootstrap = function(){
 /**
  * Instantiate globally accessible tagenvy instance
  */
-if (config.debug) console.log('Instantiate window.tagenvy');
 window.tagenvy = new TagEnvy(config);

@@ -29312,6 +29312,22 @@ var TagEnvy = function TagEnvy(config){
     this.$rootScope = void 0;
 
     /**
+     * Placeholder for the AngularJS $log
+     */
+    this.$log = void 0;
+
+    /**
+     * Create special getter to show a sensible error when trying to access $log before it can be used
+     */
+    Object.defineProperties(this, {
+        $log: {
+            get: function(){
+                throw new Error('$log is not available yet. Make sure to wrap your calls in a tagenvy.ready().');
+            }
+        }
+    });
+
+    /**
      * Placeholder for the callbacks that need to be called when tagenvy is ready
      */
     this._readyCallbacks = [];
@@ -29342,7 +29358,7 @@ var TagEnvy = function TagEnvy(config){
         // Skip automatic bootstrapping if TAGENVY_SKIP_AUTOMATIC_BOOTSTRAPPING is set to true
         // Necessary to skip bootstrapping in unit tests
         if (window.TAGENVY_SKIP_AUTOMATIC_BOOTSTRAPPING === true){
-            console.log('TagEnvy automatic bootstrapping skipped!');
+            //$log.log('TagEnvy automatic bootstrapping skipped!');
             return;
         }
 
@@ -29359,7 +29375,6 @@ var TagEnvy = function TagEnvy(config){
  * @returns {*|function()} Returns a function to unregister this listener
  */
 TagEnvy.prototype.on = function(eventName, listener){
-    if (this.config.debug) console.log('Add listener: ' + eventName);
     return this.$rootScope.$on(eventName, listener);
 };
 
@@ -29369,7 +29384,6 @@ TagEnvy.prototype.on = function(eventName, listener){
  * @param callback
  */
 TagEnvy.prototype.ready = function(callback){
-    if (this.config.debug) console.log('Add ready callback');
     this._readyCallbacks.push(callback);
 };
 
@@ -29383,8 +29397,6 @@ TagEnvy.prototype.runReadyCallbacks = function(){
 
     // Broadcast event that tagenvy is ready
     this.$rootScope.$broadcast('tagenvy:ready');
-    if (this.config.debug) console.log('broadcast tagenvy:ready');
-    if (this.config.debug) console.dir(this);
 };
 
 /**
@@ -29409,27 +29421,16 @@ TagEnvy.prototype.postBootstrap = function(){
     // Instantiate $rootscope from $injector
     this.$rootScope = this.$injector.get('$rootScope');
 
+    // Instantiate $log
+    this.$log = this.$injector.get('$log');
+
     // Run ready listeners
     this.runReadyCallbacks();
 };
 
 /**
- * Run digest cycle
- *
- * This function should never be used directly.
- * It only exists for unit test purposes.
- */
-TagEnvy.prototype.$digest = function(element){
-    element = element || document;
-    var $compile = this.$injector.get('$compile');
-    $compile(element)(this.$rootScope);
-    this.$rootScope.$digest();
-};
-
-/**
  * Instantiate globally accessible tagenvy instance
  */
-if (config.debug) console.log('Instantiate window.tagenvy');
 window.tagenvy = new TagEnvy(config);/**
  * @ngdoc directive
  * @name tagenvy.directive:body
@@ -29439,7 +29440,7 @@ window.tagenvy = new TagEnvy(config);/**
  */
 
 angular.module('tagenvy.directives')
-    .directive('body', ['tagenvy.config', '$rootScope', '$location', function (config, $rootScope, $location) {
+    .directive('body', ['tagenvy.config', '$rootScope', '$location', '$log', function (config, $rootScope, $location, $log) {
         return {
             restrict: 'E',
             link: function (scope, iElement, iAttrs) {
@@ -29452,31 +29453,34 @@ angular.module('tagenvy.directives')
 
                 var bodyId = iAttrs.id || void 0;
 
-                // Broadcast events when the body is ready
-                angular.element(iElement).ready(function(){
+                // Fire events when DOM is ready to allow <script>
+                // elements to add listeners before the events are fired.
+                iElement.ready(function(){
 
-                    if (config.debug) console.log('tagenvy:body:init');
+                    if (config.debug) $log.log('Body directive broadcasts: tagenvy:body:init');
                     $rootScope.$broadcast('tagenvy:body:init', $location);
 
-                    if (config.debug) console.log('tagenvy:common:init');
+                    if (config.debug) $log.log('Body directive broadcasts: tagenvy:common:init');
                     $rootScope.$broadcast('tagenvy:common:init', $location);
 
                     angular.forEach(classNames, function(className){
 
-                        if (config.debug) console.log('tagenvy:' + className + ':init');
+                        if (config.debug) $log.log('Body directive broadcasts: tagenvy:' + className + ':init');
                         $rootScope.$broadcast('tagenvy:' + className + ':init', $location);
 
                         if(bodyId){
-                            if (config.debug) console.log('tagenvy:' + className + ':' + bodyId);
+                            if (config.debug) $log.log('Body directive broadcasts: tagenvy:' + className + ':' + bodyId);
                             $rootScope.$broadcast('tagenvy:' + className + ':' + bodyId, $location);
                         }
 
                     });
 
-                    if (config.debug) console.log('tagenvy:common:finalize');
+                    if (config.debug) $log.log('Body directive broadcasts: tagenvy:common:finalize');
                     $rootScope.$broadcast('tagenvy:common:finalize', $location);
 
                 });
+
+
 
             }
         };
@@ -29501,7 +29505,7 @@ angular.module('tagenvy.directives')
                 // This will require the full jQuery library as the jqLite does
                 // not support live selectors
 
-                $(document).on('click', 'p', function(){
+                angular.element(document).on('click', 'p', function(){
                     $rootScope.$broadcast('tagenvy:document:p:click');
                 });
 
@@ -29516,14 +29520,14 @@ angular.module('tagenvy.directives')
  */
 
 angular.module('tagenvy.directives')
-    .directive('p', ['tagenvy.config', '$rootScope', function (config, $rootScope) {
+    .directive('p', ['tagenvy.config', '$rootScope', '$log', function (config, $rootScope, $log) {
         return {
             restrict: 'E',
-            link: function (scope, iElement, iAttrs) {
+            link    : function (scope, iElement, iAttrs) {
 
                 // Broadcast click events
-                iElement.bind('click', function(){
-                    console.log('Broadcast tagenvy:p:click event');
+                iElement.bind('click', function () {
+                    if (config.debug) $log.log('Broadcast tagenvy:p:click event');
                     $rootScope.$broadcast('tagenvy:p:click', iElement);
                 });
 

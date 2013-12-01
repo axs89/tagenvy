@@ -5,25 +5,24 @@
     <title>TagEnvy</title>
     <script src="../dist/tagenvy-with-dependencies.js"></script>
     <script>
-        console.log('SCRIPT TAG IS PROCESSED');
 
         tagenvy.ready(function(){
 
-            console.log('Tagenvy is ready!');
+            tagenvy.log('Tagenvy is ready!');
 
             // Listen for p elements that are clicked
             tagenvy.on('tagenvy:p:click', function(){
-                console.log('Event handler for "tagenvy:p:click" is run');
+                tagenvy.log('Event handler for "tagenvy:p:click" is run');
             });
 
             // Listen for body elements that are initialized
             tagenvy.on('tagenvy:body:init', function(){
-                console.log('Event handler for "tagenvy:body:init" is run');
+                tagenvy.log('Event handler for "tagenvy:body:init" is run');
             });
 
             // Listen for p elements that are clicked using live selector
             tagenvy.on('tagenvy:document:p:click', function(){
-                console.log('Event handler for "tagenvy:document:p:click" is run');
+                tagenvy.log('Event handler for "tagenvy:document:p:click" is run');
             });
 
         });
