@@ -19,7 +19,7 @@ describe('tagenvy.directives.body', function() {
         rootScopeBroadcastSpy = spyOn($rootScope, '$broadcast');
 
         // Compile markup
-        $compile('<html><bidy><p></p></bidy></html>')($rootScope);
+        $compile('<html><body><p></p></body></html>')($rootScope);
 
         // Perform digest cycle
         $rootScope.$digest();
