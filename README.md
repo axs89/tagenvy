@@ -131,7 +131,7 @@ Then navigate your browser to:
 ### 0.6.0
 
 - Added minified version of library with dependencies dist/tagenvy-with-dependecies.min.js
-- Added tagenvy.$log
+- Added tagenvy.$log helper service
 - Updated documentation
 - Removed console-shim dependency
 
