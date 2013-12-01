@@ -34,9 +34,14 @@ module.exports = function (grunt) {
             options: {
                 banner: '/*! TagEnvy <%= grunt.template.today("dd-mm-yyyy") %> */\n'
             },
-            jid: {
+            tagenvy: {
                 files: {
                     'dist/tagenvy.min.js': ['<%= concat.tagenvy.dest %>']
+                }
+            },
+            tagenvyWithDependencies: {
+                files: {
+                    'dist/tagenvy-with-dependencies.min.js': ['<%= concat.tagenvyWithDependencies.dest %>']
                 }
             }
         },
