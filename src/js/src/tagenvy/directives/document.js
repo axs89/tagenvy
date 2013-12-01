@@ -19,7 +19,7 @@ angular.module('tagenvy.directives')
                 // This will require the full jQuery library as the jqLite does
                 // not support live selectors
 
-                $(document).on('click', 'p', function(){
+                angular.element(document).on('click', 'p', function(){
                     $rootScope.$broadcast('tagenvy:document:p:click');
                 });
 
