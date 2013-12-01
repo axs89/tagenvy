@@ -93,6 +93,23 @@ Then TagEnvy will broadcast the following events:
 
 These events following the specifications of [this gist](https://gist.github.com/axs89/7558831).
 
+## Helper services
+
+### tagenvy.$log
+
+You can use the `tagenvy.$log` service to safely write messages to the browser console.
+
+    tagenvy.ready(function(){
+
+        tagenvy.$log.debug('Log a debug message to the console');
+        tagenvy.$log.error('Log an error message to the console');
+        tagenvy.$log.info('Log an info message to the console');
+        tagenvy.$log.log('Log a message to the console');
+        tagenvy.$log.warn('Log a warning message to the console');
+
+    });
+
+
 ## Demo
 
 There is a [demo](examples/index.html) available in the [examples](examples) folder.
@@ -116,6 +133,7 @@ Then navigate your browser to:
 - Added minified version of library with dependencies dist/tagenvy-with-dependecies.min.js
 - Added tagenvy.$log
 - Updated documentation
+- Removed console-shim dependency
 
 ### 0.5.0
 
