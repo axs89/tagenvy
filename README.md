@@ -95,17 +95,17 @@ These events following the specifications of [this gist](https://gist.github.com
 
 ## Helper services
 
-### tagenvy.$log
+### tagenvy.log
 
-You can use the `tagenvy.$log` service to safely write messages to the browser console.
+You can use the `tagenvy.log` service to safely write messages to the browser console.
 
     tagenvy.ready(function(){
 
-        tagenvy.$log.debug('Log a debug message to the console');
-        tagenvy.$log.error('Log an error message to the console');
-        tagenvy.$log.info('Log an info message to the console');
-        tagenvy.$log.log('Log a message to the console');
-        tagenvy.$log.warn('Log a warning message to the console');
+        tagenvy.log.debug('Log a debug message to the console');
+        tagenvy.log.error('Log an error message to the console');
+        tagenvy.log.info('Log an info message to the console');
+        tagenvy.log.log('Log a message to the console');
+        tagenvy.log.warn('Log a warning message to the console');
 
     });
 
@@ -145,6 +145,11 @@ Then navigate your browser to:
     http://localhost:9000/examples/index.html
 
 ## Change log
+
+### 0.8.0
+
+- Refactored tagenvy.$log service to tagenvy.log service
+- Updated documentation
 
 ### 0.7.0
 
