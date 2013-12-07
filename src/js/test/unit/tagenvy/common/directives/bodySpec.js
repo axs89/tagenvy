@@ -34,7 +34,7 @@ describe('tagenvy.directives.body', function() {
         $rootScope.$digest();
 
         expect(rootScopeBroadcastSpy).toHaveBeenCalled();
-        expect(rootScopeBroadcastSpy).toHaveBeenCalledWith('tagenvy:body:init', tagenvy.location);
+        expect(rootScopeBroadcastSpy).toHaveBeenCalledWith('tagenvy:body:init', jasmine.any(Object), jasmine.any(Object));
     });
 
     it('should broadcast a tagenvy:common:init event', function() {
@@ -46,7 +46,7 @@ describe('tagenvy.directives.body', function() {
         $rootScope.$digest();
 
         expect(rootScopeBroadcastSpy).toHaveBeenCalled();
-        expect(rootScopeBroadcastSpy).toHaveBeenCalledWith('tagenvy:common:init', jasmine.any(Object), jasmine.any(Object), jasmine.any(Object));
+        expect(rootScopeBroadcastSpy).toHaveBeenCalledWith('tagenvy:common:init', jasmine.any(Object), jasmine.any(Object));
     });
 
     it('should broadcast a tagenvy:common:finalize event', function() {
@@ -58,7 +58,7 @@ describe('tagenvy.directives.body', function() {
         $rootScope.$digest();
 
         expect(rootScopeBroadcastSpy).toHaveBeenCalled();
-        expect(rootScopeBroadcastSpy).toHaveBeenCalledWith('tagenvy:common:finalize', tagenvy.location);
+        expect(rootScopeBroadcastSpy).toHaveBeenCalledWith('tagenvy:common:finalize', jasmine.any(Object), jasmine.any(Object));
     });
 
     it('should broadcast a tagenvy:<bodyClassName>:init event', function() {
@@ -73,7 +73,7 @@ describe('tagenvy.directives.body', function() {
         $rootScope.$digest();
 
         expect(spy).toHaveBeenCalled();
-        expect(spy).toHaveBeenCalledWith('tagenvy:bodyClassOne:init', tagenvy.location);
+        expect(spy).toHaveBeenCalledWith('tagenvy:bodyClassOne:init', jasmine.any(Object), jasmine.any(Object));
     });
 
 
@@ -91,8 +91,8 @@ describe('tagenvy.directives.body', function() {
         $rootScope.$digest();
 
         expect(spy).toHaveBeenCalled();
-        expect(spy).toHaveBeenCalledWith('tagenvy:bodyClassOne:init', tagenvy.location);
-        expect(spy).toHaveBeenCalledWith('tagenvy:bodyClassOne:bodyId', tagenvy.location);
+        expect(spy).toHaveBeenCalledWith('tagenvy:bodyClassOne:init', jasmine.any(Object), jasmine.any(Object));
+        expect(spy).toHaveBeenCalledWith('tagenvy:bodyClassOne:bodyId', jasmine.any(Object), jasmine.any(Object));
     });
 
 });

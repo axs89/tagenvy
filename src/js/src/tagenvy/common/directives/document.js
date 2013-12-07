@@ -20,7 +20,7 @@ angular.module('tagenvy.common.directives')
                 // not support live selectors
 
                 angular.element(document).on('click', 'p', function(){
-                    $rootScope.$broadcast('tagenvy:document:p:click');
+                    $rootScope.$broadcast('tagenvy:document:p:click', iElement, iAttrs);
                 });
 
             }

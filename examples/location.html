@@ -32,7 +32,8 @@
                 output('The event "' + event.name + '" was fired');
             }
 
-            tagenvy.on('tagenvy:common:init', function(event, element, attributes, location){
+            tagenvy.on('tagenvy:common:init', function(event, element, attributes){
+                var location = tagenvy.location;
                 output('\n');
                 output('Location object detected in tagenvy:common:init listener');
                 output('-> location.absUrl(): ' + location.absUrl());

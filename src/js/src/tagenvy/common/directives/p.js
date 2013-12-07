@@ -15,7 +15,7 @@ angular.module('tagenvy.common.directives')
                 // Broadcast click events
                 iElement.bind('click', function () {
                     if (config.debug) $log.log('Broadcast tagenvy:p:click event');
-                    $rootScope.$broadcast('tagenvy:p:click', iElement);
+                    $rootScope.$broadcast('tagenvy:p:click', iElement, iAttrs);
                 });
 
             }
