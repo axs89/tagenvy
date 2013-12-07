@@ -98,7 +98,7 @@ These events following the specifications of [this gist](https://gist.github.com
 All listeners callbacks are passed the following arguments:
 
 - event: event object
-- element: the DOM element emitting the event wrapped as jQuery element
+- element: the DOM element emitting the event wrapped as jQuery selection
 - attributes: the attributes of the DOM element emitting the event
 
 This allows you to use the jQuery syntaxt to investigate or manipulate the element:
@@ -176,6 +176,12 @@ Then navigate your browser to:
     http://localhost:9000/examples/index.html
 
 ## Change log
+
+### 0.9.0
+
+- Event listeners now have access to the DOM element (wrapped as jQuery selection)
+- Added example page for working with an element
+- Updated documentation
 
 ### 0.8.0
 
