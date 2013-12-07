@@ -18,19 +18,23 @@ var config = {
 angular.module('tagenvy.config', [])
     .value('tagenvy.config', config);
 
-// Modules
-angular.module('tagenvy.controllers', []);
-angular.module('tagenvy.directives', []);
-angular.module('tagenvy.filters', []);
-angular.module('tagenvy.services', []);
+// Common module
+angular.module('tagenvy.common.directives', []);
+angular.module('tagenvy.common.services', []);
+angular.module('tagenvy.common',
+    [
+        'ng',
+        'tagenvy.config',
+        'tagenvy.common.directives',
+        'tagenvy.common.services'
+    ]);
+
+// Main module
 angular.module('tagenvy',
     [
         'ng',
         'tagenvy.config',
-        'tagenvy.controllers',
-        'tagenvy.directives',
-        'tagenvy.filters',
-        'tagenvy.services'
+        'tagenvy.common'
     ]);
 
 angular.module('tagenvy.client', ['tagenvy']);
