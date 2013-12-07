@@ -128,7 +128,6 @@ Suppose your browser is at `http://localhost:9000/examples/location.html?one=bar
 
     });
 
-
 ## Demo
 
 There is a [demo](examples/index.html) available in the [examples](examples) folder.
@@ -150,7 +149,8 @@ Then navigate your browser to:
 ### 0.7.0
 
 - Added tagenvy.location helper service
-- Added documentation
+- Added example page for demonstrating use of tagenvy.location
+- Updated documentation
 
 ### 0.6.0
 
