@@ -29265,7 +29265,10 @@ if (!console["count"]) console["count"] = function() {};
 var config = {
 
     // Enable debug mode to log debug messages in the console
-    debug: true
+    debug: true,
+    location: {
+        html5Mode: true
+    }
 };
 
 // Create all modules and define dependencies to make sure they exist
@@ -29276,22 +29279,30 @@ var config = {
 angular.module('tagenvy.config', [])
     .value('tagenvy.config', config);
 
-// Modules
-angular.module('tagenvy.controllers', []);
-angular.module('tagenvy.directives', []);
-angular.module('tagenvy.filters', []);
+// Main module
 angular.module('tagenvy.services', []);
 angular.module('tagenvy',
     [
         'ng',
         'tagenvy.config',
-        'tagenvy.controllers',
-        'tagenvy.directives',
-        'tagenvy.filters',
         'tagenvy.services'
     ]);
+angular.module('tagenvy')
+    .config(['$locationProvider', function($locationProvider){
+        if(config.location && config.location.hasOwnProperty('html5Mode')){
+            $locationProvider.html5Mode(config.location.html5Mode);
+        }
+    }]);
 
-angular.module('tagenvy.client', ['tagenvy']);
+// Common module
+angular.module('tagenvy.common.directives', []);
+angular.module('tagenvy.common.services', []);
+angular.module('tagenvy.common',
+    [
+        'tagenvy',
+        'tagenvy.common.directives',
+        'tagenvy.common.services'
+    ]);
 
 /**
  * Create TagEnvy constructor
@@ -29322,6 +29333,11 @@ var TagEnvy = function TagEnvy(config){
     this._readyCallbacks = [];
 
     /**
+     * Placeholder to keep track if AngularJS module is already bootstrapped
+     */
+    this._bootstrapped = false;
+
+    /**
      * Configuration object
      */
     this.config = {
@@ -29347,10 +29363,9 @@ var TagEnvy = function TagEnvy(config){
         // Skip automatic bootstrapping if TAGENVY_SKIP_AUTOMATIC_BOOTSTRAPPING is set to true
         // Necessary to skip bootstrapping in unit tests
         if (window.TAGENVY_SKIP_AUTOMATIC_BOOTSTRAPPING === true){
-            //$log.log('TagEnvy automatic bootstrapping skipped!');
+            // console.log('TagEnvy automatic bootstrapping skipped!');
             return;
         }
-
         // Perform bootstrap
         tagenvy.bootstrap();
     });
@@ -29393,8 +29408,13 @@ TagEnvy.prototype.runReadyCallbacks = function(){
  */
 TagEnvy.prototype.bootstrap = function(){
 
-    // Bootstrap tagenvy.client module and save injector
-    this.$injector = angular.bootstrap(document, ['tagenvy.client']);
+    if(this._bootstrapped === false){
+
+        // Bootstrap tagenvy.client module and save injector
+        this.$injector = angular.bootstrap(document, ['tagenvy.common']);
+
+        this._bootstrapped = true;
+    }
 
     // Run post bootstrap tasks
     this.postBootstrap();
@@ -29413,6 +29433,8 @@ TagEnvy.prototype.postBootstrap = function(){
     // Instantiate $log
     this.$log = this.$injector.get('$log');
 
+    this.location = this.$injector.get('location');
+
     // Run ready listeners
     this.runReadyCallbacks();
 };
@@ -29421,6 +29443,25 @@ TagEnvy.prototype.postBootstrap = function(){
  * Instantiate globally accessible tagenvy instance
  */
 window.tagenvy = new TagEnvy(config);/**
+ * @ngdoc object
+ * @name service:location
+ *
+ * @description
+ * Service factory for location object
+ *
+ * Wrapper for the AngularJS $location service to prevent
+ * tampering with location if necessary.
+ *
+ * Currently just wraps the $location service without changes.
+ *
+ */
+
+angular.module('tagenvy.services')
+    .factory('location', ['$location', function ($location) {
+
+        return $location;
+
+    }]);/**
  * @ngdoc directive
  * @name tagenvy.directive:body
  *
@@ -29428,8 +29469,8 @@ window.tagenvy = new TagEnvy(config);/**
  * Directive to work with body element
  */
 
-angular.module('tagenvy.directives')
-    .directive('body', ['tagenvy.config', '$rootScope', '$location', '$log', function (config, $rootScope, $location, $log) {
+angular.module('tagenvy.common.directives')
+    .directive('body', ['tagenvy.config', '$rootScope', 'location', '$log', function (config, $rootScope, location, $log) {
         return {
             restrict: 'E',
             link: function (scope, iElement, iAttrs) {
@@ -29447,25 +29488,25 @@ angular.module('tagenvy.directives')
                 iElement.ready(function(){
 
                     if (config.debug) $log.log('Body directive broadcasts: tagenvy:body:init');
-                    $rootScope.$broadcast('tagenvy:body:init', $location);
+                    $rootScope.$broadcast('tagenvy:body:init', location);
 
                     if (config.debug) $log.log('Body directive broadcasts: tagenvy:common:init');
-                    $rootScope.$broadcast('tagenvy:common:init', $location);
+                    $rootScope.$broadcast('tagenvy:common:init', iElement, iAttrs, location);
 
                     angular.forEach(classNames, function(className){
 
                         if (config.debug) $log.log('Body directive broadcasts: tagenvy:' + className + ':init');
-                        $rootScope.$broadcast('tagenvy:' + className + ':init', $location);
+                        $rootScope.$broadcast('tagenvy:' + className + ':init', location);
 
                         if(bodyId){
                             if (config.debug) $log.log('Body directive broadcasts: tagenvy:' + className + ':' + bodyId);
-                            $rootScope.$broadcast('tagenvy:' + className + ':' + bodyId, $location);
+                            $rootScope.$broadcast('tagenvy:' + className + ':' + bodyId, location);
                         }
 
                     });
 
                     if (config.debug) $log.log('Body directive broadcasts: tagenvy:common:finalize');
-                    $rootScope.$broadcast('tagenvy:common:finalize', $location);
+                    $rootScope.$broadcast('tagenvy:common:finalize', location);
 
                 });
 
@@ -29481,7 +29522,7 @@ angular.module('tagenvy.directives')
  * Directive to work with document
  */
 
-angular.module('tagenvy.directives')
+angular.module('tagenvy.common.directives')
     .directive('body', ['tagenvy.config', '$rootScope', function (config, $rootScope) {
         return {
             restrict: 'E',
@@ -29508,7 +29549,7 @@ angular.module('tagenvy.directives')
  * Directive to work with paragraph elements
  */
 
-angular.module('tagenvy.directives')
+angular.module('tagenvy.common.directives')
     .directive('p', ['tagenvy.config', '$rootScope', '$log', function (config, $rootScope, $log) {
         return {
             restrict: 'E',
