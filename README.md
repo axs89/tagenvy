@@ -109,6 +109,25 @@ You can use the `tagenvy.$log` service to safely write messages to the browser c
 
     });
 
+### tagenvy.location
+
+You can use the `tagenvy.location` service to parse the URL in the browser address bar.
+
+Suppose your browser is at `http://localhost:9000/examples/location.html?one=bar&two=baz#foo`:
+
+    tagenvy.ready(function(){
+
+        tagenvy.location.absUrl(); // http://localhost:9000/examples/location.html?one=bar&two=baz#foo
+        tagenvy.location.hash(); // foo
+        tagenvy.location.host(); // localhost
+        tagenvy.location.path(); // /examples/location.html
+        tagenvy.location.port(); // 9000
+        tagenvy.location.protocol(); // http
+        tagenvy.location.search(); // { one: bar, two: baz }
+        tagenvy.location.url(): /examples/location.html?one=bar&two=baz#foo
+
+    });
+
 
 ## Demo
 
@@ -127,6 +146,11 @@ Then navigate your browser to:
     http://localhost:9000/examples/index.html
 
 ## Change log
+
+### 0.7.0
+
+- Added tagenvy.location helper service
+- Added documentation
 
 ### 0.6.0
 
