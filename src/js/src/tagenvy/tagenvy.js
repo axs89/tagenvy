@@ -9,7 +9,7 @@ var config = {
     // Enable debug mode to log debug messages in the console
     debug: true,
     location: {
-        html5Mode: false
+        html5Mode: true
     }
 };
 
@@ -31,7 +31,7 @@ angular.module('tagenvy',
     ]);
 angular.module('tagenvy')
     .config(['$locationProvider', function($locationProvider){
-        if(config.location && config.location.html5Mode){
+        if(config.location && config.location.hasOwnProperty('html5Mode')){
             $locationProvider.html5Mode(config.location.html5Mode);
         }
     }]);
