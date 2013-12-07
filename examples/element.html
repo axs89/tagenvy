@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf8">
+    <title>TagEnvy demo</title>
+    <script src="../dist/tagenvy-with-dependencies.js"></script>
+    <script>
+
+        tagenvy.ready(function(){
+
+            // Assign output
+            var $output = $('#output');
+
+            var output = function(message){
+                if(angular.isObject(message)){
+                    $output.append('{' + "\n");
+                    var keys = Object.keys(message);
+                    for(var i = 0, l = keys.length; i<l; i++){
+                        $output.append('    ' + keys[i] + ': ' + message[keys[i]] + "\n");
+                    }
+                    $output.append('}' + "\n");
+                    return;
+                }
+                $output.append(message + "\n");
+            };
+
+            output('TagEnvy is ready!!');
+
+            // Define callbacks
+
+            var outputCallback = function(event){
+                output('The event "' + event.name + '" was fired');
+            }
+
+            tagenvy.on('tagenvy:p:click', function(event, element, attributes){
+                $output.html('');
+                output('\n');
+                output('Element object passed to tagenvy:common:init listener');
+                output('\n');
+                output('-> element.hasClass(\'one\'): ' + element.hasClass('one'));
+                output('-> element.hasClass(\'two\'): ' + element.hasClass('two'));
+                output('-> element.text(): ' + element.text());
+                output('-> element.html(): ' + element.html());
+                output('\n');
+            });
+        });
+
+
+    </script>
+    <body id="cart" class="shopping spending">
+        <h1>TagEnvy demo</h1>
+
+        <p>This pages configures TagEnvy to demonstrate how to work with the element passed to the event listener:</p>
+
+        <p class="one">Click this paragraph of text with <code>class="one"</code></p>
+
+        <p class="one two three">Click this paragraph of text with <code>class="one two three"</code></p>
+
+        <pre id="output"></pre>
+
+    </body>
+</head>
+</html>
