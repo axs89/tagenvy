@@ -12,10 +12,8 @@ module.exports = function (grunt) {
                 src: [
                     'src/js/src/tagenvy/tagenvy.prefix',
                     'src/js/src/tagenvy/tagenvy.js',
-                    'src/js/src/tagenvy/controllers/**/*.js',
-                    'src/js/src/tagenvy/directives/**/*.js',
-                    'src/js/src/tagenvy/filters/**/*.js',
                     'src/js/src/tagenvy/services/**/*.js',
+                    'src/js/src/tagenvy/common/**/*.js',
                     'src/js/src/tagenvy/tagenvy.suffix'
                 ],
                 dest: 'dist/tagenvy.js'
