@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf8">
+    <title>TagEnvy demo</title>
+    <script src="../dist/tagenvy-with-dependencies.js"></script>
+    <script>
+
+        tagenvy.ready(function(){
+
+            // Assign output
+            var $output = $('#output');
+
+            var output = function(message){
+                if(angular.isObject(message)){
+                    $output.append('{' + "\n");
+                    var keys = Object.keys(message);
+                    for(var i = 0, l = keys.length; i<l; i++){
+                        console.log('output key');
+                        $output.append('    ' + keys[i] + ': ' + message[keys[i]] + "\n");
+                    }
+                    $output.append('}' + "\n");
+                    return;
+                }
+                $output.append(message + "\n");
+            };
+
+            output('TagEnvy is ready!!');
+
+            // Define callbacks
+
+            var outputCallback = function(event){
+                output('The event "' + event.name + '" was fired');
+            }
+
+            tagenvy.on('tagenvy:common:init', function(event, element, attributes, location){
+                console.dir(location);
+                output('\n');
+                output('Location object detected in tagenvy:common:init listener');
+                output('-> location.absUrl(): ' + location.absUrl());
+                output('-> location.hash(): ' + location.hash());
+                output('-> location.host(): ' + location.host());
+                output('-> location.path(): ' + location.path());
+                output('-> location.port(): ' + location.port());
+                output('-> location.protocol(): ' + location.protocol());
+                output('-> location.search(): ');
+                output(location.search());
+                output('-> location.url(): ' + location.url());
+                output('\n');
+            });
+        });
+
+
+    </script>
+    <body id="cart" class="shopping spending">
+        <h1>TagEnvy demo</h1>
+
+        <p>This pages configures TagEnvy to demonstrate the use of tagenvy.location:</a>.</p>
+
+        <ul>
+            <li>Try appending a query string to the URL like "?one=valueOne&two=valueTwo" and see if the search() method returns an object with a property for each param</li>
+        </ul>
+
+        <pre id="output"></pre>
+
+    </body>
+</head>
+</html>
