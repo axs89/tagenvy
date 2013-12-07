@@ -65,9 +65,14 @@ var TagEnvy = function TagEnvy(config){
     this.$rootScope = void 0;
 
     /**
-     * Placeholder for the AngularJS $log
+     * Placeholder for the log service
      */
-    this.$log = void 0;
+    this.log = void 0;
+
+    /**
+     * Placeholder for the location service
+     */
+    this.location = void 0;
 
     /**
      * Placeholder for the callbacks that need to be called when tagenvy is ready
@@ -172,9 +177,10 @@ TagEnvy.prototype.postBootstrap = function(){
     // Instantiate $rootscope from $injector
     this.$rootScope = this.$injector.get('$rootScope');
 
-    // Instantiate $log
-    this.$log = this.$injector.get('$log');
+    // Instantiate log helper service
+    this.log = this.$injector.get('log');
 
+    // Instantiate location helper service
     this.location = this.$injector.get('location');
 
     // Run ready listeners
