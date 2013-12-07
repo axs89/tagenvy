@@ -7,7 +7,10 @@
 var config = {
 
     // Enable debug mode to log debug messages in the console
-    debug: true
+    debug: true,
+    location: {
+        html5Mode: false
+    }
 };
 
 // Create all modules and define dependencies to make sure they exist
@@ -26,6 +29,12 @@ angular.module('tagenvy',
         'tagenvy.config',
         'tagenvy.services'
     ]);
+angular.module('tagenvy')
+    .config(['$locationProvider', function($locationProvider){
+        if(config.location && config.location.html5Mode){
+            $locationProvider.html5Mode(config.location.html5Mode);
+        }
+    }]);
 
 // Common module
 angular.module('tagenvy.common.directives', []);
