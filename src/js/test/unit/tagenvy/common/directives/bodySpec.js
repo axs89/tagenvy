@@ -41,14 +41,13 @@ describe('tagenvy.directives.body', function() {
     it('should broadcast a tagenvy:common:init event', function() {
 
         var rootScopeBroadcastSpy = spyOn($rootScope, '$broadcast');
-        var $location = $injector.get('$location');
 
         var $element = angular.element(document.body);
         $compile($element)($rootScope);
         $rootScope.$digest();
 
         expect(rootScopeBroadcastSpy).toHaveBeenCalled();
-        expect(rootScopeBroadcastSpy).toHaveBeenCalledWith('tagenvy:common:init', $location);
+        expect(rootScopeBroadcastSpy).toHaveBeenCalledWith('tagenvy:common:init', jasmine.any(Object), jasmine.any(Object), jasmine.any(Object));
     });
 
     it('should broadcast a tagenvy:common:finalize event', function() {
