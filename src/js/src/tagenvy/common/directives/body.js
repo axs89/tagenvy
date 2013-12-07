@@ -6,7 +6,7 @@
  * Directive to work with body element
  */
 
-angular.module('tagenvy.directives')
+angular.module('tagenvy.common.directives')
     .directive('body', ['tagenvy.config', '$rootScope', '$location', '$log', function (config, $rootScope, $location, $log) {
         return {
             restrict: 'E',
@@ -28,7 +28,7 @@ angular.module('tagenvy.directives')
                     $rootScope.$broadcast('tagenvy:body:init', $location);
 
                     if (config.debug) $log.log('Body directive broadcasts: tagenvy:common:init');
-                    $rootScope.$broadcast('tagenvy:common:init', $location);
+                    $rootScope.$broadcast('tagenvy:common:init', iElement, iAttrs, $location);
 
                     angular.forEach(classNames, function(className){
 

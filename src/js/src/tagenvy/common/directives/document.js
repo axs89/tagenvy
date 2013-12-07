@@ -6,7 +6,7 @@
  * Directive to work with document
  */
 
-angular.module('tagenvy.directives')
+angular.module('tagenvy.common.directives')
     .directive('body', ['tagenvy.config', '$rootScope', function (config, $rootScope) {
         return {
             restrict: 'E',

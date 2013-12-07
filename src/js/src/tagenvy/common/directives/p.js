@@ -6,7 +6,7 @@
  * Directive to work with paragraph elements
  */
 
-angular.module('tagenvy.directives')
+angular.module('tagenvy.common.directives')
     .directive('p', ['tagenvy.config', '$rootScope', '$log', function (config, $rootScope, $log) {
         return {
             restrict: 'E',
