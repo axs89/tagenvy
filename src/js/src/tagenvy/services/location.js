@@ -5,21 +5,16 @@
  * @description
  * Service factory for location object
  *
- * This wraps the AngularJS $location service but only provides getter methods
- * to prevent tampering with the actual location.
+ * Wrapper for the AngularJS $location service to prevent
+ * tampering with location if necessary.
+ *
+ * Currently just wraps the $location service without changes.
  *
  */
 
 angular.module('tagenvy.services')
     .factory('location', ['$location', function ($location) {
 
-        var Location = function Location() {};
+        return $location;
 
-        angular.extend(Location.prototype, {
-            absUrl: function(){
-                return $location.absUrl();
-            }
-        });
-
-        return new Location();
     }]);
