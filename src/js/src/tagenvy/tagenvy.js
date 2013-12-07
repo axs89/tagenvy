@@ -18,26 +18,23 @@ var config = {
 angular.module('tagenvy.config', [])
     .value('tagenvy.config', config);
 
+// Main module
+angular.module('tagenvy',
+    [
+        'ng',
+        'tagenvy.config'
+    ]);
+
 // Common module
 angular.module('tagenvy.common.directives', []);
 angular.module('tagenvy.common.services', []);
 angular.module('tagenvy.common',
     [
         'ng',
-        'tagenvy.config',
+        'tagenvy',
         'tagenvy.common.directives',
         'tagenvy.common.services'
     ]);
-
-// Main module
-angular.module('tagenvy',
-    [
-        'ng',
-        'tagenvy.config',
-        'tagenvy.common'
-    ]);
-
-angular.module('tagenvy.client', ['tagenvy']);
 
 /**
  * Create TagEnvy constructor
@@ -140,7 +137,7 @@ TagEnvy.prototype.runReadyCallbacks = function(){
 TagEnvy.prototype.bootstrap = function(){
 
     // Bootstrap tagenvy.client module and save injector
-    this.$injector = angular.bootstrap(document, ['tagenvy.client']);
+    this.$injector = angular.bootstrap(document, ['tagenvy.common']);
 
     // Run post bootstrap tasks
     this.postBootstrap();
