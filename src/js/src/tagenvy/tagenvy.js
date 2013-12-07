@@ -19,10 +19,12 @@ angular.module('tagenvy.config', [])
     .value('tagenvy.config', config);
 
 // Main module
+angular.module('tagenvy.services', []);
 angular.module('tagenvy',
     [
         'ng',
-        'tagenvy.config'
+        'tagenvy.config',
+        'tagenvy.services'
     ]);
 
 // Common module
@@ -30,7 +32,6 @@ angular.module('tagenvy.common.directives', []);
 angular.module('tagenvy.common.services', []);
 angular.module('tagenvy.common',
     [
-        'ng',
         'tagenvy',
         'tagenvy.common.directives',
         'tagenvy.common.services'
@@ -65,6 +66,11 @@ var TagEnvy = function TagEnvy(config){
     this._readyCallbacks = [];
 
     /**
+     * Placeholder to keep track if AngularJS module is already bootstrapped
+     */
+    this._bootstrapped = false;
+
+    /**
      * Configuration object
      */
     this.config = {
@@ -90,10 +96,9 @@ var TagEnvy = function TagEnvy(config){
         // Skip automatic bootstrapping if TAGENVY_SKIP_AUTOMATIC_BOOTSTRAPPING is set to true
         // Necessary to skip bootstrapping in unit tests
         if (window.TAGENVY_SKIP_AUTOMATIC_BOOTSTRAPPING === true){
-            //$log.log('TagEnvy automatic bootstrapping skipped!');
+            // console.log('TagEnvy automatic bootstrapping skipped!');
             return;
         }
-
         // Perform bootstrap
         tagenvy.bootstrap();
     });
@@ -136,8 +141,13 @@ TagEnvy.prototype.runReadyCallbacks = function(){
  */
 TagEnvy.prototype.bootstrap = function(){
 
-    // Bootstrap tagenvy.client module and save injector
-    this.$injector = angular.bootstrap(document, ['tagenvy.common']);
+    if(this._bootstrapped === false){
+
+        // Bootstrap tagenvy.client module and save injector
+        this.$injector = angular.bootstrap(document, ['tagenvy.common']);
+
+        this._bootstrapped = true;
+    }
 
     // Run post bootstrap tasks
     this.postBootstrap();
@@ -155,6 +165,8 @@ TagEnvy.prototype.postBootstrap = function(){
 
     // Instantiate $log
     this.$log = this.$injector.get('$log');
+
+    this.location = this.$injector.get('location');
 
     // Run ready listeners
     this.runReadyCallbacks();
