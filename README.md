@@ -93,6 +93,37 @@ Then TagEnvy will broadcast the following events:
 
 These events following the specifications of [this gist](https://gist.github.com/axs89/7558831).
 
+## Event listeners
+
+All listeners callbacks are passed the following arguments:
+
+- event: event object
+- element: the DOM element emitting the event wrapped as jQuery element
+- attributes: the attributes of the DOM element emitting the event
+
+This allows you to use the jQuery syntaxt to investigate or manipulate the element:
+
+    tagenvy.on('tagenvy:common:init', function(event, element, attributes){
+
+        // Get element id
+        element.attr('id');
+
+        // Get element classes
+        element.attr('class');
+
+        // Check if element has class
+        element.hasClass('someClass');
+
+        // Get element content as text
+        element.text();
+
+        // Get element content as html
+        element.html();
+
+        // Etc... see jQuery documentation for all possible methods
+
+    });
+
 ## Helper services
 
 ### tagenvy.log
