@@ -5,8 +5,9 @@
 
 describe('tagenvy', function() {
 
-    var module;
-    var dependencies;
+    var module,
+        dependencies;
+
     dependencies = [];
 
     var hasModule = function(module) {
@@ -20,23 +21,11 @@ describe('tagenvy', function() {
         dependencies = module.requires;
     });
 
-    it('should load config module', function() {
+    it('should load the tagenvy.config module', function() {
         expect(hasModule('tagenvy.config')).toBeTruthy();
     });
 
-    it('should load controllers module', function() {
-        expect(hasModule('tagenvy.controllers')).toBeTruthy();
-    });
-
-    it('should load filters module', function() {
-        expect(hasModule('tagenvy.filters')).toBeTruthy();
-    });
-
-    it('should load directives module', function() {
-        expect(hasModule('tagenvy.directives')).toBeTruthy();
-    });
-
-    it('should load services module', function() {
+    it('should load the tagenvy.services module', function() {
         expect(hasModule('tagenvy.services')).toBeTruthy();
     });
 
