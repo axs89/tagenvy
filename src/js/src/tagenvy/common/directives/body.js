@@ -7,7 +7,7 @@
  */
 
 angular.module('tagenvy.common.directives')
-    .directive('body', ['tagenvy.config', '$rootScope', '$location', '$log', function (config, $rootScope, $location, $log) {
+    .directive('body', ['tagenvy.config', '$rootScope', 'location', '$log', function (config, $rootScope, location, $log) {
         return {
             restrict: 'E',
             link: function (scope, iElement, iAttrs) {
@@ -25,25 +25,25 @@ angular.module('tagenvy.common.directives')
                 iElement.ready(function(){
 
                     if (config.debug) $log.log('Body directive broadcasts: tagenvy:body:init');
-                    $rootScope.$broadcast('tagenvy:body:init', $location);
+                    $rootScope.$broadcast('tagenvy:body:init', location);
 
                     if (config.debug) $log.log('Body directive broadcasts: tagenvy:common:init');
-                    $rootScope.$broadcast('tagenvy:common:init', iElement, iAttrs, $location);
+                    $rootScope.$broadcast('tagenvy:common:init', iElement, iAttrs, location);
 
                     angular.forEach(classNames, function(className){
 
                         if (config.debug) $log.log('Body directive broadcasts: tagenvy:' + className + ':init');
-                        $rootScope.$broadcast('tagenvy:' + className + ':init', $location);
+                        $rootScope.$broadcast('tagenvy:' + className + ':init', location);
 
                         if(bodyId){
                             if (config.debug) $log.log('Body directive broadcasts: tagenvy:' + className + ':' + bodyId);
-                            $rootScope.$broadcast('tagenvy:' + className + ':' + bodyId, $location);
+                            $rootScope.$broadcast('tagenvy:' + className + ':' + bodyId, location);
                         }
 
                     });
 
                     if (config.debug) $log.log('Body directive broadcasts: tagenvy:common:finalize');
-                    $rootScope.$broadcast('tagenvy:common:finalize', $location);
+                    $rootScope.$broadcast('tagenvy:common:finalize', location);
 
                 });
 
