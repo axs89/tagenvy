@@ -16,7 +16,6 @@
                     $output.append('{' + "\n");
                     var keys = Object.keys(message);
                     for(var i = 0, l = keys.length; i<l; i++){
-                        console.log('output key');
                         $output.append('    ' + keys[i] + ': ' + message[keys[i]] + "\n");
                     }
                     $output.append('}' + "\n");
@@ -34,7 +33,6 @@
             }
 
             tagenvy.on('tagenvy:common:init', function(event, element, attributes, location){
-                console.dir(location);
                 output('\n');
                 output('Location object detected in tagenvy:common:init listener');
                 output('-> location.absUrl(): ' + location.absUrl());
