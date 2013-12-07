@@ -25,6 +25,7 @@
             };
 
             output('TagEnvy is ready!!');
+            output('Click one of the paragraphs above.');
 
             // Define callbacks
 
@@ -37,6 +38,7 @@
                 output('\n');
                 output('Element object passed to tagenvy:common:init listener');
                 output('\n');
+                output('-> element.attr(\'id\'): ' + element.attr('id'));
                 output('-> element.hasClass(\'one\'): ' + element.hasClass('one'));
                 output('-> element.hasClass(\'two\'): ' + element.hasClass('two'));
                 output('-> element.text(): ' + element.text());
@@ -52,9 +54,9 @@
 
         <p>This pages configures TagEnvy to demonstrate how to work with the element passed to the event listener:</p>
 
-        <p class="one">Click this paragraph of text with <code>class="one"</code></p>
+        <p id="paragraphOne" class="one">Click this paragraph of text with <code>class="one"</code></p>
 
-        <p class="one two three">Click this paragraph of text with <code>class="one two three"</code></p>
+        <p id="paragraphTwo" class="one two three">Click this paragraph of text with <code>class="one two three"</code></p>
 
         <pre id="output"></pre>
 
