@@ -29308,11 +29308,11 @@ angular.module('tagenvy.common.directives')
 
                     angular.forEach(classNames, function(className){
 
-                        if (config.debug) $log.log('Body directive broadcasts: tagenvy:' + className + ':init');
+                        if (config.debug) $log.log('Body directive broadcasts: tagenvy:common:' + className + ':init');
                         $rootScope.$broadcast('tagenvy:common:' + className + ':init', iElement, iAttrs);
 
                         if(bodyId){
-                            if (config.debug) $log.log('Body directive broadcasts: tagenvy:' + className + ':' + bodyId);
+                            if (config.debug) $log.log('Body directive broadcasts: tagenvy:common:' + className + ':' + bodyId);
                             $rootScope.$broadcast('tagenvy:common:' + className + ':' + bodyId, iElement, iAttrs);
                         }
 
