@@ -9,15 +9,13 @@ describe('tagenvy.directives.body', function() {
         $rootScope,
         tagenvy;
 
-    // Load tagenvy from global window object
-    tagenvy = window.tagenvy;
-
-    // Bootstrap tagenvy so it's injector and root scope are initialized
-    tagenvy.bootstrap();
-
     beforeEach(module('tagenvy.common'));
 
     beforeEach(function(){
+
+        // Bootstrap tagenvy
+        tagenvy = window.tagenvy;
+        tagenvy.bootstrap();
 
         // Get injector and root scope from tagenvy
         $injector = tagenvy.$injector;

@@ -2,18 +2,14 @@
 
 describe('tagenvy', function() {
 
-    var $injector,
-        $rootScope,
+    var $rootScope,
         tagenvy;
-
-    // Load tagenvy from global window object
-    tagenvy = window.tagenvy;
-
-    tagenvy.bootstrap();
 
     beforeEach(function(){
 
-        // Get root scope from tagenvy
+        // Bootstrap tagenvy
+        tagenvy = window.tagenvy;
+        tagenvy.bootstrap();
         $rootScope = tagenvy.$rootScope;
     });
 

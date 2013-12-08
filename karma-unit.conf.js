@@ -14,9 +14,9 @@ module.exports = function(config) {
 
         // list of files / patterns to load in the browser
         files: [
-            'src/js/test/lib/tagenvy-skip-automatic-bootstrapping.js',
             'dist/tagenvy-with-dependencies.js',
             'bower_components/angular-mocks/angular-mocks.js',
+            'src/js/test/lib/tagenvy.global.js',
             'src/js/test/unit/**/*.js'
         ],
 
