@@ -66,7 +66,7 @@ var TagEnvy = function TagEnvy(config){
     /**
      * Placeholder to keep track if AngularJS module is already bootstrapped
      */
-    this._bootstrapped = false;
+    this._angularBootstrapped = false;
 
     /**
      * Configuration object
@@ -96,20 +96,19 @@ var TagEnvy = function TagEnvy(config){
      * Automatic bootstrap
      */
 
-    var tagenvy = this;
+    if(this.config.autoBootstrap){
+        // Call bootstrap method when document is ready
+        var tagenvy = this;
+        angular.element(document).ready(
+            (function(tagenvy){
+                return function() {
 
-    // Call bootstrap method when document is ready
-    angular.element(document).ready(function() {
-
-        // Skip automatic bootstrapping if tagenvy.config.autoBootstrap is set to true
-        // Necessary to skip bootstrapping in unit tests
-        if (tagenvy.config.autoBootstrap === true){
-            // console.log('TagEnvy automatic bootstrapping skipped!');
-            return;
-        }
-        // Perform bootstrap
-        tagenvy.bootstrap();
-    });
+                    // Perform bootstrap
+                    tagenvy.bootstrap();
+                };
+            })(tagenvy)
+        );
+    }
 };
 
 /**
@@ -150,11 +149,11 @@ TagEnvy.prototype.runReadyCallbacks = function(){
 TagEnvy.prototype.bootstrap = function(){
 
     // Bootstrap Angular
-    if(this._bootstrapped === false){
+    if(this._angularBootstrapped === false){
 
-        // Configure Angular components before bootstrapping
         var tagenvy = this;
 
+        // Configure Angular components before bootstrapping
         angular.module('tagenvy.config')
             .value('tagenvy.config', tagenvy.config);
 
@@ -166,7 +165,7 @@ TagEnvy.prototype.bootstrap = function(){
         // Bootstrap tagenvy.client module and save injector
         this.$injector = angular.bootstrap(document, ['tagenvy.common']);
 
-        this._bootstrapped = true;
+        this._angularBootstrapped = true;
     }
 
     // Run post bootstrap tasks
