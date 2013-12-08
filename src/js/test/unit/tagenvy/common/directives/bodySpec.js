@@ -1,7 +1,5 @@
 'use strict';
 
-// @todo Testing directives do not support the body element. Can we find an alternative?
-
 describe('tagenvy.directives.body', function() {
 
     var $injector,

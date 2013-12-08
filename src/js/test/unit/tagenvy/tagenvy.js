@@ -1,8 +1,5 @@
 'use strict';
 
-// Set the jasmine fixture path
-// jasmine.getFixtures().fixturesPath = 'base/';
-
 describe('tagenvy', function() {
 
     var module,
