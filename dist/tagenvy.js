@@ -6,22 +6,12 @@
  * It is passed to tagenvy global instance and to the AngularJS module
  */
 
-var config = {
-
-    // Enable debug mode to log debug messages in the console
-    debug: true,
-    location: {
-        html5Mode: true
-    }
-};
-
 // Create all modules and define dependencies to make sure they exist
 // and are loaded in the correct order to satisfy dependency injection
 // before all nested files are concatenated by Grunt
 
 // Config
-angular.module('tagenvy.config', [])
-    .value('tagenvy.config', config);
+angular.module('tagenvy.config', []);
 
 // Main module
 angular.module('tagenvy.services', []);
@@ -31,12 +21,6 @@ angular.module('tagenvy',
         'tagenvy.config',
         'tagenvy.services'
     ]);
-angular.module('tagenvy')
-    .config(['$locationProvider', function($locationProvider){
-        if(config.location && config.location.hasOwnProperty('html5Mode')){
-            $locationProvider.html5Mode(config.location.html5Mode);
-        }
-    }]);
 
 // Common module
 angular.module('tagenvy.common.directives', []);
@@ -84,13 +68,23 @@ var TagEnvy = function TagEnvy(config){
     /**
      * Placeholder to keep track if AngularJS module is already bootstrapped
      */
-    this._bootstrapped = false;
+    this._angularBootstrapped = false;
 
     /**
      * Configuration object
      */
     this.config = {
-        debug: true
+
+        // Enable debug mode to log debug messages in the console
+        debug: true,
+
+        location: {
+
+            // Enable or disable HTML5 mode for location parsing
+            html5Mode: true
+        },
+
+        autoBootstrap: true
     };
 
     /**
@@ -104,20 +98,19 @@ var TagEnvy = function TagEnvy(config){
      * Automatic bootstrap
      */
 
-    var tagenvy = this;
+    if(this.config.autoBootstrap){
+        // Call bootstrap method when document is ready
+        var tagenvy = this;
+        angular.element(document).ready(
+            (function(tagenvy){
+                return function() {
 
-    // Call bootstrap method when document is ready
-    angular.element(document).ready(function() {
-
-        // Skip automatic bootstrapping if TAGENVY_SKIP_AUTOMATIC_BOOTSTRAPPING is set to true
-        // Necessary to skip bootstrapping in unit tests
-        if (window.TAGENVY_SKIP_AUTOMATIC_BOOTSTRAPPING === true){
-            // console.log('TagEnvy automatic bootstrapping skipped!');
-            return;
-        }
-        // Perform bootstrap
-        tagenvy.bootstrap();
-    });
+                    // Perform bootstrap
+                    tagenvy.bootstrap();
+                };
+            })(tagenvy)
+        );
+    }
 };
 
 /**
@@ -157,12 +150,24 @@ TagEnvy.prototype.runReadyCallbacks = function(){
  */
 TagEnvy.prototype.bootstrap = function(){
 
-    if(this._bootstrapped === false){
+    // Bootstrap Angular
+    if(this._angularBootstrapped === false){
+
+        var tagenvy = this;
+
+        // Configure Angular components before bootstrapping
+        angular.module('tagenvy.config')
+            .value('tagenvy.config', tagenvy.config);
+
+        angular.module('tagenvy')
+            .config(['$locationProvider', function($locationProvider){
+                $locationProvider.html5Mode(tagenvy.config.location.html5Mode);
+            }]);
 
         // Bootstrap tagenvy.client module and save injector
         this.$injector = angular.bootstrap(document, ['tagenvy.common']);
 
-        this._bootstrapped = true;
+        this._angularBootstrapped = true;
     }
 
     // Run post bootstrap tasks
@@ -192,7 +197,9 @@ TagEnvy.prototype.postBootstrap = function(){
 /**
  * Instantiate globally accessible tagenvy instance
  */
-window.tagenvy = new TagEnvy(config);/**
+window.TagEnvy = TagEnvy;
+window.jurgen = "test";
+window.Jurgen = "test";/**
  * @ngdoc object
  * @name service:location
  *
