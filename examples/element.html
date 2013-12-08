@@ -35,17 +35,16 @@
                 output('The event "' + event.name + '" was fired');
             }
 
-            tagenvy.on('tagenvy:p:click', function(event, element, attributes){
+            tagenvy.on('tagenvy:common:init', function(event, $element, attributes){
                 $output.html('');
                 output('\n');
                 output('Element object passed to tagenvy:common:init listener');
                 output('\n');
-                output('-> element.attr(\'id\'): ' + element.attr('id'));
-                output('-> element.attr(\'class\'): ' + element.attr('class'));
-                output('-> element.hasClass(\'one\'): ' + element.hasClass('one'));
-                output('-> element.hasClass(\'two\'): ' + element.hasClass('two'));
-                output('-> element.text(): ' + element.text());
-                output('-> element.html(): ' + element.html());
+                output('-> element.attr(\'id\'): ' + $element.attr('id'));
+                output('-> element.attr(\'class\'): ' + $element.attr('class'));
+                output('-> element.hasClass(\'shopping\'): ' + $element.hasClass('shopping'));
+                output('-> element.hasClass(\'spending\'): ' + $element.hasClass('spending'));
+                output('-> element.hasClass(\'saving\'): ' + $element.hasClass('saving'));
                 output('\n');
                 output('\n');
                 output('Element object passed to tagenvy:common:init listener');
@@ -61,9 +60,7 @@
 
         <p>This pages configures TagEnvy to demonstrate how to work with the element passed to the event listener:</p>
 
-        <p id="paragraphOne" class="one">Click this paragraph of text with <code>class="one"</code></p>
-
-        <p id="paragraphTwo" class="one two three">Click this paragraph of text with <code>class="one two three"</code></p>
+        <p>The body has a class="shopping spending" attribute.</p>
 
         <pre id="output"></pre>
 
