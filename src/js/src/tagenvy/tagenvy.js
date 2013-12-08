@@ -193,8 +193,6 @@ TagEnvy.prototype.postBootstrap = function(){
 };
 
 /**
- * Instantiate globally accessible tagenvy instance
+ * Instantiate globally accessible TagEnvy constructor
  */
 window.TagEnvy = TagEnvy;
-window.jurgen = "test";
-window.Jurgen = "test";
