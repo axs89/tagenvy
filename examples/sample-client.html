@@ -40,6 +40,8 @@
 
         tagenvy.ready(function () {
 
+            var params = tagenvy.location.search();
+
             tagenvy.on('tagenvy:common:init', function (event, $element, attrs) {
                 analytics.initialize({
                     'Google Analytics': {
@@ -53,14 +55,35 @@
                 analytics.track('Viewed Post');
             });
 
+            //masters sales page
             tagenvy.on('tagenvy:postid-3658:init', function (event, $element, attrs) {
                 var $orderButtons = jQuery('.premise-above-pricing-table-content').last().find('a');
                 analytics.trackLink($orderButtons, 'Clicked Masters Order Link');
                 tagenvy.log.log('viewed masters sales page');
             });
 
+            //premium sales page
+            tagenvy.on('tagenvy:page-id-7014:init', function (event, $element, attrs) {
+                var $orderButtons = jQuery('a.signup, #layout-807822850 a');
+                analytics.trackLink($orderButtons, 'Clicked Premium Order Link');
+                tagenvy.log.log('viewed premium sales page');
+            });
+
+            //jmm-thank-you page (masters)
+            tagenvy.on('tagenvy:postid-5440:init', function (event, $element, attrs) {
+                analytics.track('Purchased Masters', {value: params.gross});
+            });
+
+            //thank-you-dvd page (masters)
+            tagenvy.on('tagenvy:postid-5975:init', function (event, $element, attrs) {
+                analytics.track('Purchased Masters', {value: 67.90});
+            });
+
+            //thanks-premium-purchase
+            //thanks-premium-purchase/?sub=m (monthly)
+            //thanks-premium-purchase/?sub=q (quarterly)
+            //thanks-premium-purchase/?sub=y (yearly)
             tagenvy.on('tagenvy:postid-6957:init', function (event, $element, attrs) {
-                var params = tagenvy.location.search();
                 if (params.sub === "m") {
                     var trackingParams = {subscription: "monthly", value: 28.95}
                 }
@@ -73,6 +96,13 @@
                 analytics.track('Purchased Premium', trackingParams);
             });
 
+            //login-premium/?msg=SUCCESS_CREATION
+            tagenvy.on('tagenvy:page-id-4206:init', function (event, $element, attrs) {
+                if (params.msg === "SUCCESS_CREATION") {
+                    analytics.track('Purchased Masters');
+                }
+            });
+
         });
 
 
@@ -83,34 +113,55 @@
     <p>This pages configures TagEnvy to simulate the behavior of
         <a href="https://gist.github.com/axs89/31ce27935b518e1d675f">this gist</a>.</p>
 
-    <p>The body has the following attributes:</p>
-
-    <ul>
-        <li>class="single-post"</p></li>
-    </ul>
+    <p>Click the "Apply" links to simulate certain body classes.</p>
 
     <p>Check the output in the console...</p>
 
-    <table style="border: 1px solid black;">
+    <table style="border: 1px solid black;" cellpadding="5" cellspacing="5">
         <tr>
             <td>Body ID</td>
             <td>Body classes</td>
             <td>&nbsp;</td>
         </tr>
         <tr>
-            <td>bodyId</td>
+            <td></td>
             <td>single-post</td>
-            <td><a href="#" onclick="javascript:changeBodyAttributes('bodyId','single-post')">Apply</a></td>
+            <td><a href="#" onclick="javascript:changeBodyAttributes('','single-post')">Apply</a></td>
         </tr>
         <tr>
-            <td>bodyId</td>
+            <td></td>
             <td>postid-3658</td>
-            <td><a href="#" onclick="javascript:changeBodyAttributes('bodyId','postid-3658')">Apply</a></td>
+            <td><a href="#" onclick="javascript:changeBodyAttributes('','postid-3658')">Apply</a></td>
         </tr>
         <tr>
-            <td>bodyId</td>
+            <td></td>
             <td>postid-6957</td>
-            <td><a href="#" onclick="javascript:changeBodyAttributes('bodyId','postid-6957')">Apply</a></td>
+            <td><a href="#" onclick="javascript:changeBodyAttributes('','postid-6957')">Apply</a></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>page-id-7014</td>
+            <td><a href="#" onclick="javascript:changeBodyAttributes('','page-id-7014')">Apply</a></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>postid-5440</td>
+            <td><a href="#" onclick="javascript:changeBodyAttributes('','postid-5440')">Apply</a></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>postid-5975</td>
+            <td><a href="#" onclick="javascript:changeBodyAttributes('','postid-5975')">Apply</a></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>postid-6957</td>
+            <td><a href="#" onclick="javascript:changeBodyAttributes('','postid-6957')">Apply</a></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>page-id-4206</td>
+            <td><a href="#" onclick="javascript:changeBodyAttributes('','page-id-4206')">Apply</a></td>
         </tr>
     </table>
     <p>
