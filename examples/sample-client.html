@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf8">
+    <title>TagEnvy demo</title>
+    <script src="../dist/tagenvy-with-dependencies.js"></script>
+    <script>
+
+        /**
+         * Helper functions for demonstration purposes
+         */
+
+        var analytics = {
+            track     : function () {
+                tagenvy.log.log('analytics.track:');
+                tagenvy.log.log(arguments);
+            },
+            trackLink : function () {
+                tagenvy.log.log('analytics.trackLink:');
+                tagenvy.log.log(arguments);
+            },
+            initialize: function (config) {
+                tagenvy.log.log('analytics.initialize:');
+                tagenvy.log.log(config);
+            }
+        };
+
+        var changeBodyAttributes = function (bodyId, bodyClass) {
+            tagenvy.log.log('changeBodyAttributes');
+            var $body = $('body');
+            $body.attr('id', bodyId).attr('class', bodyClass);
+            var $compile = tagenvy.$injector.get('$compile');
+            $compile(window.document)(tagenvy.$rootScope);
+            tagenvy.$rootScope.$digest();
+        };
+
+        /**
+         * TagEnvy code
+         */
+
+        tagenvy.ready(function () {
+
+            tagenvy.on('tagenvy:common:init', function (event, $element, attrs) {
+                analytics.initialize({
+                    'Google Analytics': {
+                        trackingId: 'UA-XXXXXXXX-1',
+                        classic   : true
+                    }
+                });
+            });
+
+            tagenvy.on('tagenvy:single-post:init', function (event, $element, attrs) {
+                analytics.track('Viewed Post');
+            });
+
+            tagenvy.on('tagenvy:postid-3658:init', function (event, $element, attrs) {
+                var $orderButtons = jQuery('.premise-above-pricing-table-content').last().find('a');
+                analytics.trackLink($orderButtons, 'Clicked Masters Order Link');
+                tagenvy.log.log('viewed masters sales page');
+            });
+
+            tagenvy.on('tagenvy:postid-6957:init', function (event, $element, attrs) {
+                var params = tagenvy.location.search();
+                if (params.sub === "m") {
+                    var trackingParams = {subscription: "monthly", value: 28.95}
+                }
+                else if (params.sub === "q") {
+                    var trackingParams = {subscription: "quarterly", value: 69.95}
+                }
+                else if (params.sub === "y") {
+                    var trackingParams = {subscription: "quarterly", value: 204.95}
+                }
+                analytics.track('Purchased Premium', trackingParams);
+            });
+
+        });
+
+
+    </script>
+    <body class="single-post">
+    <h1>TagEnvy demo</h1>
+
+    <p>This pages configures TagEnvy to simulate the behavior of
+        <a href="https://gist.github.com/axs89/31ce27935b518e1d675f">this gist</a>.</p>
+
+    <p>The body has the following attributes:</p>
+
+    <ul>
+        <li>class="single-post"</p></li>
+    </ul>
+
+    <p>Check the output in the console...</p>
+
+    <table style="border: 1px solid black;">
+        <tr>
+            <td>Body ID</td>
+            <td>Body classes</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>bodyId</td>
+            <td>single-post</td>
+            <td><a href="#" onclick="javascript:changeBodyAttributes('bodyId','single-post')">Apply</a></td>
+        </tr>
+        <tr>
+            <td>bodyId</td>
+            <td>postid-3658</td>
+            <td><a href="#" onclick="javascript:changeBodyAttributes('bodyId','postid-3658')">Apply</a></td>
+        </tr>
+        <tr>
+            <td>bodyId</td>
+            <td>postid-6957</td>
+            <td><a href="#" onclick="javascript:changeBodyAttributes('bodyId','postid-6957')">Apply</a></td>
+        </tr>
+    </table>
+    <p>
+
+    </p>
+
+    </body>
+</head>
+</html>
