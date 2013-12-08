@@ -195,11 +195,9 @@ TagEnvy.prototype.postBootstrap = function(){
 };
 
 /**
- * Instantiate globally accessible tagenvy instance
+ * Instantiate globally accessible TagEnvy constructor
  */
-window.TagEnvy = TagEnvy;
-window.jurgen = "test";
-window.Jurgen = "test";/**
+window.TagEnvy = TagEnvy;/**
  * @ngdoc object
  * @name service:location
  *
