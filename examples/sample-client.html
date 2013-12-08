@@ -27,7 +27,7 @@
 
         var changeBodyAttributes = function (bodyId, bodyClass) {
             tagenvy.log.log('changeBodyAttributes');
-            var $body = $('body');
+            var $body = angular.element('body');
             $body.attr('id', bodyId).attr('class', bodyClass);
             var $compile = tagenvy.$injector.get('$compile');
             $compile(window.document)(tagenvy.$rootScope);
