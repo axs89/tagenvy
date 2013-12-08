@@ -6,23 +6,25 @@
     <script src="../dist/tagenvy-with-dependencies.js"></script>
     <script>
 
+        var tagenvy = new window.TagEnvy();
+
         tagenvy.ready(function(){
 
-            tagenvy.log('Tagenvy is ready!');
+            tagenvy.log.log('Tagenvy is ready!');
 
             // Listen for p elements that are clicked
             tagenvy.on('tagenvy:p:click', function(){
-                tagenvy.log('Event handler for "tagenvy:p:click" is run');
+                tagenvy.log.log('Event handler for "tagenvy:p:click" is run');
             });
 
             // Listen for body elements that are initialized
             tagenvy.on('tagenvy:body:init', function(){
-                tagenvy.log('Event handler for "tagenvy:body:init" is run');
+                tagenvy.log.log('Event handler for "tagenvy:body:init" is run');
             });
 
             // Listen for p elements that are clicked using live selector
             tagenvy.on('tagenvy:document:p:click', function(){
-                tagenvy.log('Event handler for "tagenvy:document:p:click" is run');
+                tagenvy.log.log('Event handler for "tagenvy:document:p:click" is run');
             });
 
         });
