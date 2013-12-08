@@ -1,6 +1,6 @@
 # TagEnvy
 
-The TagEnvy analytics framework
+The TagEnvy analytics framework is an opinionated framework that allows you to easily attach custom callbacks to page events.
 
 ## Quickstart
 
@@ -8,25 +8,27 @@ First make sure `tagenvy-with-dependencies.js` is loaded on your page:
 
     <script src="tagenvy-with-dependencies.js"></script>
 
-Then use the `tagenvy` global object to add as much event listeners as you like:
+Then use the `TagEnvy` global constructor to create a TagEnvy instance:
 
-    <script>
-        tagenvy.ready(function(){
+    var tagenvy = new window.TagEnvy();
 
-            // Listen for p elements that are clicked
-            tagenvy.on('tagenvy:p:click', function(){
+Then add as much event listeners as you like:
 
-                // Code you want to run
-            });
+    tagenvy.ready(function(){
 
-            // Listen for body elements that are initialized
-            tagenvy.on('tagenvy:body:init', function(){
+        // Listen for p elements that are clicked
+        tagenvy.on('tagenvy:p:click', function(){
 
-                // Code you want to run
-            });
-
+            // Code you want to run
         });
-    </script>
+
+        // Listen for body elements that are initialized
+        tagenvy.on('tagenvy:body:init', function(){
+
+            // Code you want to run
+        });
+
+    });
 
 ## tagenvy.ready()
 
@@ -161,9 +163,9 @@ Suppose your browser is at `http://localhost:9000/examples/location.html?one=bar
 
 ## Demo
 
-There is a [demo](examples/index.html) available in the [examples](examples) folder.
+There are several examples available in the [examples](examples) folder.
 
-To run the demo locally, you can clone this repository and run:
+To run the demo's locally, you can clone this repository and run:
 
     $ bower install // To install the bower components
 
