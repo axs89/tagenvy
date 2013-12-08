@@ -24,20 +24,17 @@ angular.module('tagenvy.common.directives')
                 // elements to add listeners before the events are fired.
                 iElement.ready(function(){
 
-                    if (config.debug) $log.log('Body directive broadcasts: tagenvy:body:init');
-                    $rootScope.$broadcast('tagenvy:body:init', iElement, iAttrs);
-
                     if (config.debug) $log.log('Body directive broadcasts: tagenvy:common:init');
                     $rootScope.$broadcast('tagenvy:common:init', iElement, iAttrs);
 
                     angular.forEach(classNames, function(className){
 
                         if (config.debug) $log.log('Body directive broadcasts: tagenvy:' + className + ':init');
-                        $rootScope.$broadcast('tagenvy:' + className + ':init', iElement, iAttrs);
+                        $rootScope.$broadcast('tagenvy:common:' + className + ':init', iElement, iAttrs);
 
                         if(bodyId){
                             if (config.debug) $log.log('Body directive broadcasts: tagenvy:' + className + ':' + bodyId);
-                            $rootScope.$broadcast('tagenvy:' + className + ':' + bodyId, iElement, iAttrs);
+                            $rootScope.$broadcast('tagenvy:common:' + className + ':' + bodyId, iElement, iAttrs);
                         }
 
                     });

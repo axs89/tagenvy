@@ -23,18 +23,6 @@ describe('tagenvy.directives.body', function() {
         $compile = $injector.get('$compile');
     });
 
-    it('should broadcast a tagenvy:body:init event', function() {
-
-        var rootScopeBroadcastSpy = spyOn($rootScope, '$broadcast');
-
-        var $element = angular.element(document.body);
-        $compile($element)($rootScope);
-        $rootScope.$digest();
-
-        expect(rootScopeBroadcastSpy).toHaveBeenCalled();
-        expect(rootScopeBroadcastSpy).toHaveBeenCalledWith('tagenvy:body:init', jasmine.any(Object), jasmine.any(Object));
-    });
-
     it('should broadcast a tagenvy:common:init event', function() {
 
         var rootScopeBroadcastSpy = spyOn($rootScope, '$broadcast');
@@ -71,7 +59,7 @@ describe('tagenvy.directives.body', function() {
         $rootScope.$digest();
 
         expect(spy).toHaveBeenCalled();
-        expect(spy).toHaveBeenCalledWith('tagenvy:bodyClassOne:init', jasmine.any(Object), jasmine.any(Object));
+        expect(spy).toHaveBeenCalledWith('tagenvy:common:bodyClassOne:init', jasmine.any(Object), jasmine.any(Object));
     });
 
 
@@ -89,8 +77,8 @@ describe('tagenvy.directives.body', function() {
         $rootScope.$digest();
 
         expect(spy).toHaveBeenCalled();
-        expect(spy).toHaveBeenCalledWith('tagenvy:bodyClassOne:init', jasmine.any(Object), jasmine.any(Object));
-        expect(spy).toHaveBeenCalledWith('tagenvy:bodyClassOne:bodyId', jasmine.any(Object), jasmine.any(Object));
+        expect(spy).toHaveBeenCalledWith('tagenvy:common:bodyClassOne:init', jasmine.any(Object), jasmine.any(Object));
+        expect(spy).toHaveBeenCalledWith('tagenvy:common:bodyClassOne:bodyId', jasmine.any(Object), jasmine.any(Object));
     });
 
 });

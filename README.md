@@ -16,14 +16,8 @@ Then add as much event listeners as you like:
 
     tagenvy.ready(function(){
 
-        // Listen for p elements that are clicked
-        tagenvy.on('tagenvy:p:click', function(){
-
-            // Code you want to run
-        });
-
         // Listen for body elements that are initialized
-        tagenvy.on('tagenvy:body:init', function(){
+        tagenvy.on('tagenvy:common:init', function(){
 
             // Code you want to run
         });
@@ -39,13 +33,13 @@ As a consequence, if you write inline scripts to interact with TagEnvy using the
 Therefore you should always write your code inside a `tagenvy.ready()` block to ensure everything is ready before your code is executed:
 
     // This will throw an error if tagenvy is not ready yet
-    tagenvy.on('tagenvy:body:init', function(){
+    tagenvy.on('tagenvy:common:init', function(){
         // Don't do this
     });
 
     // Instead wrap it inside a tagenvy.ready() block to make sure you are good to go
     tagenvy.ready(function(){
-        tagenvy.on('tagenvy:body:init', function(){
+        tagenvy.on('tagenvy:common:init', function(){
             // This is the correct way to add a listener
         });
     });
@@ -63,17 +57,7 @@ All event names are prefixed with `tagenvy:` and you can define listeners to lis
     // Listen to tagenvy ready event which is fired when tagenvy is ready to run
     tagenvy.on('tagenvy:ready', function(){...});
 
-### tagenvy:body:*
-
-    // Listen to body initialization event
-    tagenvy.on('tagenvy:body:init', function(){...});
-
-### tagenvy:p:*
-
-    // Listen to click event on p elements
-    tagenvy.on('tagenvy:p:click', function(){...});
-
-### special body specific events
+### tagenvy:common:*
 
 Suppose your code has a `body` tag like this:
 
@@ -83,15 +67,15 @@ Then TagEnvy will broadcast the following events:
 
     tagenvy.on('tagenvy:common:init', function(){...});
 
-    tagenvy.on('tagenvy:bodyClassOne:init', function(){...});
+    tagenvy.on('tagenvy:common:bodyClassOne:init', function(){...});
 
-    tagenvy.on('tagenvy:bodyClassOne:bodyId', function(){...});
+    tagenvy.on('tagenvy:common:bodyClassOne:bodyId', function(){...});
 
-    tagenvy.on('tagenvy:bodyClassTwo:init', function(){...});
+    tagenvy.on('tagenvy:common:bodyClassTwo:init', function(){...});
 
-    tagenvy.on('tagenvy:bodyClassTwo:bodyId', function(){...});
+    tagenvy.on('tagenvy:common:bodyClassTwo:bodyId', function(){...});
 
-    tagenvy.on('tagenvy:common:finalize', function(){...});
+    tagenvy.on('tagenvy:common:common:finalize', function(){...});
 
 These events following the specifications of [this gist](https://gist.github.com/axs89/7558831).
 
@@ -227,7 +211,7 @@ Then navigate your browser to:
 
 - Added TagEnvy automatic bootstrapping
 - Added tagenvy:ready event
-- Added tagenvy:body:init event
+- Added tagenvy:common:body:init event
 - Added tagenvy:p:click event
 - Added automatic building of dist/tagenvy-with-dependecies.js
 
