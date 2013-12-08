@@ -260,20 +260,17 @@ angular.module('tagenvy.common.directives')
                 // elements to add listeners before the events are fired.
                 iElement.ready(function(){
 
-                    if (config.debug) $log.log('Body directive broadcasts: tagenvy:body:init');
-                    $rootScope.$broadcast('tagenvy:body:init', iElement, iAttrs);
-
                     if (config.debug) $log.log('Body directive broadcasts: tagenvy:common:init');
                     $rootScope.$broadcast('tagenvy:common:init', iElement, iAttrs);
 
                     angular.forEach(classNames, function(className){
 
                         if (config.debug) $log.log('Body directive broadcasts: tagenvy:' + className + ':init');
-                        $rootScope.$broadcast('tagenvy:' + className + ':init', iElement, iAttrs);
+                        $rootScope.$broadcast('tagenvy:common:' + className + ':init', iElement, iAttrs);
 
                         if(bodyId){
                             if (config.debug) $log.log('Body directive broadcasts: tagenvy:' + className + ':' + bodyId);
-                            $rootScope.$broadcast('tagenvy:' + className + ':' + bodyId, iElement, iAttrs);
+                            $rootScope.$broadcast('tagenvy:common:' + className + ':' + bodyId, iElement, iAttrs);
                         }
 
                     });
@@ -284,55 +281,6 @@ angular.module('tagenvy.common.directives')
                 });
 
 
-
-            }
-        };
-    }]);/**
- * @ngdoc directive
- * @name tagenvy.directive:document
- *
- * @description
- * Directive to work with document
- */
-
-angular.module('tagenvy.common.directives')
-    .directive('body', ['tagenvy.config', '$rootScope', function (config, $rootScope) {
-        return {
-            restrict: 'E',
-            link: function (scope, iElement, iAttrs) {
-
-                // Broadcast paragraph clicks using live selector so it also
-                // includes paragraphs that are added dynamically in the DOM
-                // after the page initially loaded
-
-                // This will require the full jQuery library as the jqLite does
-                // not support live selectors
-
-                angular.element(document).on('click', 'p', function(){
-                    $rootScope.$broadcast('tagenvy:document:p:click', iElement, iAttrs);
-                });
-
-            }
-        };
-    }]);/**
- * @ngdoc directive
- * @name tagenvy.directive:p
- *
- * @description
- * Directive to work with paragraph elements
- */
-
-angular.module('tagenvy.common.directives')
-    .directive('p', ['tagenvy.config', '$rootScope', '$log', function (config, $rootScope, $log) {
-        return {
-            restrict: 'E',
-            link    : function (scope, iElement, iAttrs) {
-
-                // Broadcast click events
-                iElement.bind('click', function () {
-                    if (config.debug) $log.log('Broadcast tagenvy:p:click event');
-                    $rootScope.$broadcast('tagenvy:p:click', iElement, iAttrs);
-                });
 
             }
         };
