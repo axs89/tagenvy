@@ -53,31 +53,31 @@
                 });
             });
 
-            tagenvy.on('tagenvy:single-post:init', function (event, $element, attrs) {
+            tagenvy.on('tagenvy:common:single-post:init', function (event, $element, attrs) {
                 analytics.track('Viewed Post');
             });
 
             //masters sales page
-            tagenvy.on('tagenvy:postid-3658:init', function (event, $element, attrs) {
+            tagenvy.on('tagenvy:common:postid-3658:init', function (event, $element, attrs) {
                 var $orderButtons = jQuery('.premise-above-pricing-table-content').last().find('a');
                 analytics.trackLink($orderButtons, 'Clicked Masters Order Link');
                 tagenvy.log.log('viewed masters sales page');
             });
 
             //premium sales page
-            tagenvy.on('tagenvy:page-id-7014:init', function (event, $element, attrs) {
+            tagenvy.on('tagenvy:common:page-id-7014:init', function (event, $element, attrs) {
                 var $orderButtons = jQuery('a.signup, #layout-807822850 a');
                 analytics.trackLink($orderButtons, 'Clicked Premium Order Link');
                 tagenvy.log.log('viewed premium sales page');
             });
 
             //jmm-thank-you page (masters)
-            tagenvy.on('tagenvy:postid-5440:init', function (event, $element, attrs) {
+            tagenvy.on('tagenvy:common:postid-5440:init', function (event, $element, attrs) {
                 analytics.track('Purchased Masters', {value: params.gross});
             });
 
             //thank-you-dvd page (masters)
-            tagenvy.on('tagenvy:postid-5975:init', function (event, $element, attrs) {
+            tagenvy.on('tagenvy:common:postid-5975:init', function (event, $element, attrs) {
                 analytics.track('Purchased Masters', {value: 67.90});
             });
 
@@ -85,7 +85,7 @@
             //thanks-premium-purchase/?sub=m (monthly)
             //thanks-premium-purchase/?sub=q (quarterly)
             //thanks-premium-purchase/?sub=y (yearly)
-            tagenvy.on('tagenvy:postid-6957:init', function (event, $element, attrs) {
+            tagenvy.on('tagenvy:common:postid-6957:init', function (event, $element, attrs) {
                 if (params.sub === "m") {
                     var trackingParams = {subscription: "monthly", value: 28.95}
                 }
@@ -99,7 +99,7 @@
             });
 
             //login-premium/?msg=SUCCESS_CREATION
-            tagenvy.on('tagenvy:page-id-4206:init', function (event, $element, attrs) {
+            tagenvy.on('tagenvy:common:page-id-4206:init', function (event, $element, attrs) {
                 if (params.msg === "SUCCESS_CREATION") {
                     analytics.track('Purchased Masters');
                 }

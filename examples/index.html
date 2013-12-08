@@ -12,33 +12,18 @@
 
             tagenvy.log.log('Tagenvy is ready!');
 
-            // Listen for p elements that are clicked
-            tagenvy.on('tagenvy:p:click', function(){
-                tagenvy.log.log('Event handler for "tagenvy:p:click" is run');
-            });
-
             // Listen for body elements that are initialized
-            tagenvy.on('tagenvy:body:init', function(){
-                tagenvy.log.log('Event handler for "tagenvy:body:init" is run');
-            });
-
-            // Listen for p elements that are clicked using live selector
-            tagenvy.on('tagenvy:document:p:click', function(){
-                tagenvy.log.log('Event handler for "tagenvy:document:p:click" is run');
+            tagenvy.on('tagenvy:common:init', function(){
+                tagenvy.log.log('Event handler for "tagenvy:common:init" is run');
             });
 
         });
 
-        var addParagraph = function(){
-            $('body').append('<p>Clicking this new paragraph will only trigger listeners for the "tagenvy:document:p:click" event since it was dynamically added to the DOM and was not available when the document loaded intially.</p>');
-        }
     </script>
     <body>
         <h1>TagEnvy test page</h1>
 
-        <p>Clicking this paragraph should trigger the "tagenvy:p:click", which has a listener that logs a message to the console</p>
-
-        <button onClick="addParagraph()">Add new paragraph</button>
+        <p>Check the console for output...</p>
     </body>
 </head>
 </html>
