@@ -163,7 +163,13 @@ Then navigate your browser to:
 
 ## Change log
 
+### 0.11.0
+
+- Events are now namespaced to avoid conflicts among modules
+- Updated documentation
+
 ### 0.10.0
+
 - Added example page to simulate behavior is specified in [this gist](https://gist.github.com/axs89/31ce27935b518e1d675f)
 - Added support for passing in dynamic configuration as argument at instantiation
 
